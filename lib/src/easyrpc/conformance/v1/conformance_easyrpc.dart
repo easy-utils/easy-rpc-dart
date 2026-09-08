@@ -7,24 +7,24 @@ class ConformanceServiceClient {
   ConformanceServiceClient(this._t);
 
   Future<m.HealthResponse> health(m.HealthRequest req) async {
-    final res = await _t.send(Request(url: '/easyrpc.conformance.v1.ConformanceService/Health', body: req.writeToBuffer()));
+    final res = await _t.send(Request(url: '/v1/health', body: req.writeToBuffer()));
     if (res.error != null) throw res.error!;
     return m.HealthResponse.fromBuffer(res.body!);
   }
 
   Future<m.EchoResponse> echo(m.EchoRequest req) async {
-    final res = await _t.send(Request(url: '/easyrpc.conformance.v1.ConformanceService/Echo', body: req.writeToBuffer()));
+    final res = await _t.send(Request(url: '/v1/echo', body: req.writeToBuffer()));
     if (res.error != null) throw res.error!;
     return m.EchoResponse.fromBuffer(res.body!);
   }
 
   Stream<m.CountResponse> count(m.CountRequest req) async* {
-    final st = await _t.openStream(Request(url: '/easyrpc.conformance.v1.ConformanceService/Count', body: req.writeToBuffer()));
+    final st = await _t.openStream(Request(url: '/v1/count', body: req.writeToBuffer()));
     await for (final chunk in st.messages) { yield m.CountResponse.fromBuffer(chunk); }
   }
 
   Future<m.FailResponse> fail(m.FailRequest req) async {
-    final res = await _t.send(Request(url: '/easyrpc.conformance.v1.ConformanceService/Fail', body: req.writeToBuffer()));
+    final res = await _t.send(Request(url: '/v1/fail', body: req.writeToBuffer()));
     if (res.error != null) throw res.error!;
     return m.FailResponse.fromBuffer(res.body!);
   }

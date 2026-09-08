@@ -134,3 +134,62 @@ class Transport {
 
   void close() => _client.close();
 }
+
+class MethodSpecDart {
+  final String path;
+  final String name;
+  final bool serverStream;
+  MethodSpecDart({required this.path, required this.name, required this.serverStream});
+}
+
+// ---- server side (dart:io HttpServer) ----
+typedef DartUnaryHandler = Future<Uint8List?> Function(String kind, Uint8List input);
+typedef DartStreamHandler = Future<void> Function(String kind, Uint8List input, void Function(Uint8List) emit);
+
+class DartServerRegistry {
+  final Map<String, DartUnaryHandler> unary = {};
+  final Map<String, DartStreamHandler> stream = {};
+}
+
+Future<io.HttpServer> serveDart(
+  List<MethodSpecDart> specs,
+  DartServerRegistry reg, {
+  String host = '127.0.0.1',
+  int port = 18888,
+}) async {
+  final server = await io.HttpServer.bind(host, port);
+  server.listen((req) async {
+    var body = <int>[];
+    await for (final c in req) body.addAll(c);
+    final input = Uint8List.fromList(body);
+    final kind = (req.headers['content-type']?.first ?? '').startsWith('application/json') ? 'json' : 'proto';
+    final spec = specs.firstWhere((s) => s.path == req.uri.path,
+        orElse: () => MethodSpecDart(path: '', name: '', serverStream: false));
+    if (spec.path.isEmpty) { req.response.statusCode = 404; await req.response.close(); return; }
+    final headers = req.response.headers;
+    if (spec.serverStream) {
+      final h = reg.stream[spec.name];
+      if (h == null) { req.response.statusCode = 404; await req.response.close(); return; }
+      headers.set('content-type', kind == 'json' ? 'application/connect+json' : 'application/connect+proto');
+      final chunks = <Uint8List>[];
+      await h(kind, input, (m) { chunks.add(m); });
+            final frames = <Uint8List>[];
+      for (final p in chunks) { frames.add(frame(p)); }
+      var total = 0;
+      for (final fr in frames) { total += fr.length; }
+      final body2 = Uint8List(total);
+      var off = 0;
+      for (final fr in frames) { body2.setRange(off, off + fr.length, fr); off += fr.length; }
+      req.response.add(Uint8List.fromList(body2));
+      await req.response.close();
+    } else {
+      final h = reg.unary[spec.name];
+      if (h == null) { req.response.statusCode = 404; await req.response.close(); return; }
+      headers.set('content-type', kind == 'json' ? 'application/json' : 'application/proto');
+      final out = await h(kind, input);
+      if (out != null) req.response.add(out);
+      await req.response.close();
+    }
+  });
+  return server;
+}
