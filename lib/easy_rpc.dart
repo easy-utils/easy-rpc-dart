@@ -96,10 +96,12 @@ class RpcStream {
 
 class Transport {
   final io.HttpClient _client;
-  Transport({io.HttpClient? client}) : _client = client ?? io.HttpClient();
+  final String baseUrl;
+  Transport({io.HttpClient? client, this.baseUrl = ''}) : _client = client ?? io.HttpClient();
+  String _url(String u) => u.startsWith('http') ? u : '$baseUrl$u';
 
   Future<Response> send(Request req) async {
-    final uri = Uri.parse(req.url);
+    final uri = Uri.parse(_url(req.url));
     final r = await _client.openUrl(req.method, uri);
     r.headers.contentType = io.ContentType('application', 'proto');
     if (req.body != null) r.add(req.body!);
@@ -114,7 +116,7 @@ class Transport {
   }
 
   Future<RpcStream> openStream(Request req) async {
-    final uri = Uri.parse(req.url);
+    final uri = Uri.parse(_url(req.url));
     final r = await _client.openUrl(req.method, uri);
     r.headers.contentType = io.ContentType('application', 'connect+proto');
     if (req.body != null) r.add(req.body!);
