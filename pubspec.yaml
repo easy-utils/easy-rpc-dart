@@ -1,0 +1,13 @@
+name: easy_rpc
+description: easy-rpc Dart core (zero-bindings Transport + Connect wire).
+version: 0.1.0
+publish_to: 'none'
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  test: ^1.25.0
+  protobuf: ^6.0.0
+  http2: ^2.3.0
+  fixnum: ^1.1.1
