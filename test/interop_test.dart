@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:easy_rpc/easy_rpc.dart';
 import 'package:easy_rpc/src/easyrpc/conformance/v1/conformance.pb.dart' as pb;
 import 'package:easy_rpc/src/easyrpc/conformance/v1/conformance_easyrpc.dart';

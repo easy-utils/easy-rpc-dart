@@ -1,0 +1,6 @@
+analyzer:
+  # lib/src/mobile/* require Flutter-SDK packages (cronet_http/cupertino_http/http).
+  # Excluded from the pure Dart VM lint/build; they are compiled only inside a
+  # Flutter app that adds those deps.
+  exclude:
+    - lib/src/mobile/**.dart
