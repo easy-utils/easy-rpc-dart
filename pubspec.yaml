@@ -11,3 +11,4 @@ dependencies:
   protobuf: ^6.0.0
   http2: ^2.3.0
   fixnum: ^1.1.1
+  http: ^1.6.0

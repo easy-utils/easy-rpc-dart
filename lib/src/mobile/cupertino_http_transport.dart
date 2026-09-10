@@ -7,12 +7,13 @@ import 'dart:typed_data';
 import 'package:cupertino_http/cupertino_http.dart';
 import '../../easy_rpc.dart';
 
-class CupertinoHttpTransport {
+class CupertinoHttpTransport implements Transport {
   final String baseUrl;
   CupertinoHttpTransport({this.baseUrl = ''});
 
   String _url(String u) => u.startsWith('http') ? u : '$baseUrl$u';
 
+  @override
   Future<Response> send(Request req) async {
     final resp = await CupertinoClient().post(_url(req.url),
         headers: req.headers, body: req.body);
@@ -26,5 +27,11 @@ class CupertinoHttpTransport {
     );
   }
 
-  Future<Response> openStream(Request req) async => send(req);
+  @override
+  @override
+  Future<RpcStream> openStream(Request req) async {
+    final res = await send(req);
+    if (res.error != null) throw res.error!;
+    return RpcStream(FrameReader().frames(Stream<List<int>>.fromIterable([res.body ?? Uint8List(0)])));
+  }
 }

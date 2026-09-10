@@ -9,6 +9,12 @@ import 'dart:typed_data';
 
 
 
+// Core is transport-agnostic: it exposes ONLY the abstract Transport contract,
+// the wire primitives (Request/Response/RpcStream/framing) and a default
+// dart:io bridge. Platform bridges (Http2Transport / FetchTransport /
+// CronetHttpTransport / CupertinoHttpTransport) live in their own files and are
+// imported explicitly by the caller — so generated SDKs never pull Flutter
+// runtime deps. See `lib/src/http2_transport.dart`, `lib/src/mobile/*`.
 export 'src/easyrpc/conformance/v1/conformance.pb.dart';
 
 typedef Headers = Map<String, List<String>>;
@@ -105,12 +111,23 @@ class RpcStream {
   void cancel() {}
 }
 
-class Transport {
+/// The Transport contract: any HTTP runtime bridge must implement this to be
+/// usable by generated clients. Bridges keep zero runtime bindings — the core
+/// only speaks the Connect wire through [send]/[openStream].
+abstract class Transport {
+  Future<Response> send(Request req);
+  Future<RpcStream> openStream(Request req);
+}
+
+/// dart:io-based bridge (HTTP/1.1 + chunked server-streams, TLS via a custom
+/// CA). This is the default native transport.
+class IoTransport implements Transport {
   final io.HttpClient _client;
   final String baseUrl;
-  Transport({io.HttpClient? client, this.baseUrl = ''}) : _client = client ?? io.HttpClient();
+  IoTransport({io.HttpClient? client, this.baseUrl = ''}) : _client = client ?? io.HttpClient();
   String _url(String u) => u.startsWith('http') ? u : '$baseUrl$u';
 
+  @override
   Future<Response> send(Request req) async {
     final uri = Uri.parse(_url(req.url));
     final r = await _client.openUrl(req.method, uri);
@@ -126,6 +143,7 @@ class Transport {
     );
   }
 
+  @override
   Future<RpcStream> openStream(Request req) async {
     final uri = Uri.parse(_url(req.url));
     final r = await _client.openUrl(req.method, uri);
@@ -144,63 +162,4 @@ class Transport {
   }
 
   void close() => _client.close();
-}
-
-class MethodSpecDart {
-  final String path;
-  final String name;
-  final bool serverStream;
-  MethodSpecDart({required this.path, required this.name, required this.serverStream});
-}
-
-// ---- server side (dart:io HttpServer) ----
-typedef DartUnaryHandler = Future<Uint8List?> Function(String kind, Uint8List input);
-typedef DartStreamHandler = Future<void> Function(String kind, Uint8List input, void Function(Uint8List) emit);
-
-class DartServerRegistry {
-  final Map<String, DartUnaryHandler> unary = {};
-  final Map<String, DartStreamHandler> stream = {};
-}
-
-Future<io.HttpServer> serveDart(
-  List<MethodSpecDart> specs,
-  DartServerRegistry reg, {
-  String host = '127.0.0.1',
-  int port = 18888,
-}) async {
-  final server = await io.HttpServer.bind(host, port);
-  server.listen((req) async {
-    var body = <int>[];
-    await for (final c in req) body.addAll(c);
-    final input = Uint8List.fromList(body);
-    final kind = (req.headers['content-type']?.first ?? '').startsWith('application/json') ? 'json' : 'proto';
-    final spec = specs.firstWhere((s) => s.path == req.uri.path,
-        orElse: () => MethodSpecDart(path: '', name: '', serverStream: false));
-    if (spec.path.isEmpty) { req.response.statusCode = 404; await req.response.close(); return; }
-    final headers = req.response.headers;
-    if (spec.serverStream) {
-      final h = reg.stream[spec.name];
-      if (h == null) { req.response.statusCode = 404; await req.response.close(); return; }
-      headers.set('content-type', kind == 'json' ? 'application/connect+json' : 'application/connect+proto');
-      final chunks = <Uint8List>[];
-      await h(kind, input, (m) { chunks.add(m); });
-            final frames = <Uint8List>[];
-      for (final p in chunks) { frames.add(frame(p)); }
-      var total = 0;
-      for (final fr in frames) { total += fr.length; }
-      final body2 = Uint8List(total);
-      var off = 0;
-      for (final fr in frames) { body2.setRange(off, off + fr.length, fr); off += fr.length; }
-      req.response.add(Uint8List.fromList(body2));
-      await req.response.close();
-    } else {
-      final h = reg.unary[spec.name];
-      if (h == null) { req.response.statusCode = 404; await req.response.close(); return; }
-      headers.set('content-type', kind == 'json' ? 'application/json' : 'application/proto');
-      final out = await h(kind, input);
-      if (out != null) req.response.add(out);
-      await req.response.close();
-    }
-  });
-  return server;
 }

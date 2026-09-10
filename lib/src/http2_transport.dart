@@ -10,12 +10,13 @@ import '../easy_rpc.dart';
 /// Uses the `http2` package. For https:// it negotiates h2 via ALPN; for
 /// http:// it uses h2c prior knowledge (the server must speak HTTP/2 without
 /// TLS). Falls back to plain HTTP/1.1 (dart:io) when h2 is unavailable.
-class Http2Transport {
+class Http2Transport implements Transport {
   final String baseUrl;
   Http2Transport({this.baseUrl = ''});
 
   String _url(String u) => u.startsWith('http') ? u : '$baseUrl$u';
 
+  @override
   Future<Response> send(Request req) async {
     final connection = _Response1();
     final stream = await _roundTrip(req, connection);
@@ -27,6 +28,14 @@ class Http2Transport {
           ? RPCError(connectFromStatus(connection.status), utf8.decode(stream))
           : null,
     );
+  }
+
+
+  @override
+  Future<RpcStream> openStream(Request req) async {
+    final res = await send(req);
+    if (res.error != null) throw res.error!;
+    return RpcStream(FrameReader().frames(Stream<List<int>>.fromIterable([res.body ?? Uint8List(0)])));
   }
 
   Future<Uint8List> _roundTrip(Request req, _Response1 conn) async {

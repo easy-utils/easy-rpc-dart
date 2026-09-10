@@ -8,12 +8,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../easy_rpc.dart';
 
-class FetchTransport {
+class FetchTransport implements Transport {
   final String baseUrl;
   FetchTransport({this.baseUrl = ''});
 
   String _url(String u) => u.startsWith('http') ? u : '$baseUrl$u';
 
+  @override
   Future<Response> send(Request req) async {
     final resp = await http.post(Uri.parse(_url(req.url)),
         headers: _mapHeaders(req.headers), body: req.body);
@@ -27,7 +28,17 @@ class FetchTransport {
     );
   }
 
-  Future<Response> openStream(Request req) async => send(req);
+  @override
+  Future<RpcStream> openStream(Request req) async {
+    final resp = await http.post(Uri.parse(_url(req.url)),
+        headers: _mapHeaders(req.headers), body: req.body);
+    if (resp.statusCode >= 300) {
+      throw RPCError(connectFromStatus(resp.statusCode), utf8.decode(resp.bodyBytes));
+    }
+    // Web fetch returns the whole body at once; de-frame it into payloads.
+    final chunks = Stream<List<int>>.fromIterable([resp.bodyBytes]);
+    return RpcStream(FrameReader().frames(chunks));
+  }
 
   Map<String, String> _mapHeaders(Map<String, List<String>> h) {
     final out = <String, String>{};
