@@ -61,6 +61,15 @@ int httpStatus(int code) => switch (code) {
       _ => 500,
     };
 
+/// Reconstruct an RPCError from a response's `connect-code`/`connect-error`
+/// headers (the HTTP status alone is lossy). \`body\` is the raw error body.
+RPCError rpcErrorFrom(int status, Map<String, List<String>> headers, List<int> body) {
+  final code = headers['connect-code']?.first;
+  final c = code == null ? null : int.tryParse(code);
+  if (c != null) return RPCError(c, headers['connect-error']?.first ?? '');
+  return RPCError(connectFromStatus(status), body.isEmpty ? '' : utf8.decode(body));
+}
+
 int connectFromStatus(int status) => switch (status) {
       400 => 3,
       404 => 5,
@@ -132,14 +141,20 @@ class IoTransport implements Transport {
     final uri = Uri.parse(_url(req.url));
     final r = await _client.openUrl(req.method, uri);
     r.headers.contentType = io.ContentType('application', 'proto');
+    req.headers.forEach((k, vs) {
+      for (final v in vs) {
+        r.headers.add(k, v);
+      }
+    });
     if (req.body != null) r.add(req.body!);
     final resp = await r.close();
     final body = await resp.fold<Uint8List>(Uint8List(0), (a, b) => Uint8List.fromList([...a, ...b]));
+    final hdrs = _hdrs(resp.headers);
     return Response(
       status: resp.statusCode,
-      headers: _hdrs(resp.headers),
+      headers: hdrs,
       body: body,
-      error: resp.statusCode >= 300 ? RPCError(connectFromStatus(resp.statusCode), body.isEmpty ? '' : utf8.decode(body)) : null,
+      error: resp.statusCode >= 300 ? _errorOf(hdrs, resp.statusCode, body) : null,
     );
   }
 
@@ -148,12 +163,23 @@ class IoTransport implements Transport {
     final uri = Uri.parse(_url(req.url));
     final r = await _client.openUrl(req.method, uri);
     r.headers.contentType = io.ContentType('application', 'connect+proto');
+    req.headers.forEach((k, vs) {
+      for (final v in vs) {
+        r.headers.add(k, v);
+      }
+    });
     if (req.body != null) r.add(req.body!);
     final resp = await r.close();
     // Use raw byte stream: resp is Stream<List<int>>.
     final raw = resp as Stream<List<int>>;
     return RpcStream(FrameReader().frames(raw));
   }
+
+  /// Reconstruct the exact RPCError from the `connect-code`/`connect-error`
+  /// headers the server sends (the HTTP status alone is lossy — several
+  /// Connect codes map to 400/409/500).
+  RPCError _errorOf(Headers h, int status, Uint8List body) =>
+      rpcErrorFrom(status, h, body);
 
   Headers _hdrs(io.HttpHeaders h) {
     final out = <String, List<String>>{};

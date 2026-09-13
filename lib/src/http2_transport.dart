@@ -20,13 +20,20 @@ class Http2Transport implements Transport {
   Future<Response> send(Request req) async {
     final connection = _Response1();
     final stream = await _roundTrip(req, connection);
+    final hdrs = _mapHeaders(connection.headers);
+    RPCError? err;
+    if (connection.status >= 300) {
+      final code = hdrs['connect-code']?.first;
+      final c = code == null ? null : int.tryParse(code);
+      err = c != null
+          ? RPCError(c, hdrs['connect-error']?.first ?? '')
+          : RPCError(connectFromStatus(connection.status), utf8.decode(stream));
+    }
     return Response(
       status: connection.status,
-      headers: _mapHeaders(connection.headers),
+      headers: hdrs,
       body: stream,
-      error: connection.status >= 300
-          ? RPCError(connectFromStatus(connection.status), utf8.decode(stream))
-          : null,
+      error: err,
     );
   }
 

@@ -22,7 +22,7 @@ class CupertinoHttpTransport implements Transport {
       headers: resp.headers,
       body: resp.bodyBytes,
       error: resp.status >= 300
-          ? RPCError(connectFromStatus(resp.status), String.fromCharCodes(resp.bodyBytes))
+          ? rpcErrorFrom(resp.status, resp.headers, resp.bodyBytes)
           : null,
     );
   }
