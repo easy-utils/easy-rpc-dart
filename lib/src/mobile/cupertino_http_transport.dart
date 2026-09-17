@@ -13,18 +13,24 @@ class CupertinoHttpTransport implements Transport {
 
   String _url(String u) => u.startsWith('http') ? u : '$baseUrl$u';
 
+  /// cupertino_http takes single-valued headers; flatten our multi-value map.
+  Map<String, String> _flatHeaders(Map<String, List<String>> h) =>
+      h.map((k, v) => MapEntry(k, v.first));
+
   @override
   Future<Response> send(Request req) async {
     // cupertino_http 3.x removed the default CupertinoClient() constructor;
     // defaultSessionConfiguration() exists in 2.x and 3.x alike.
     final resp = await CupertinoClient.defaultSessionConfiguration()
-        .post(_url(req.url), headers: req.headers, body: req.body);
+        .post(_url(req.url), headers: _flatHeaders(req.headers), body: req.body);
+    // cupertino_http exposes single-valued headers; widen to multi-value.
+    final headers = resp.headers.map((k, v) => MapEntry(k, [v]));
     return Response(
       status: resp.status,
-      headers: resp.headers,
+      headers: headers,
       body: resp.bodyBytes,
       error: resp.status >= 300
-          ? rpcResponseError(resp.status, resp.headers, resp.bodyBytes)
+          ? rpcResponseError(resp.status, headers, resp.bodyBytes)
           : null,
     );
   }
