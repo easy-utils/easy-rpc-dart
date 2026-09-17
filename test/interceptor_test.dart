@@ -10,6 +10,7 @@ class _Fake implements Transport {
 }
 
 void main() {
+  _errorJson();
   test('interceptors compose', () async {
     final f = _Fake();
     final t = InterceptorTransport(
@@ -19,5 +20,13 @@ void main() {
     await t.send(Request(url: '/x'));
     expect(f.seen['x-test'], ['abc']);
     expect(f.seen['connect-timeout-ms'], ['250']);
+  });
+}
+
+void _errorJson() {
+  test('error json roundtrip', () {
+    final b = encodeErrorJson(7, 'denied');
+    expect(decodeErrorJson(b), (7, 'denied'));
+    expect(decodeErrorJson(const []), (0, ''));
   });
 }

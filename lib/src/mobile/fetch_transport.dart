@@ -23,7 +23,7 @@ class FetchTransport implements Transport {
       headers: _mapStringHeaders(resp.headers),
       body: resp.bodyBytes,
       error: resp.statusCode >= 300
-          ? rpcErrorFrom(resp.statusCode, resp.headers, resp.bodyBytes)
+          ? rpcResponseError(resp.statusCode, resp.headers, resp.bodyBytes)
           : null,
     );
   }
@@ -33,7 +33,7 @@ class FetchTransport implements Transport {
     final resp = await http.post(Uri.parse(_url(req.url)),
         headers: _mapHeaders(req.headers), body: req.body);
     if (resp.statusCode >= 300) {
-      throw rpcErrorFrom(resp.statusCode, resp.headers, resp.bodyBytes);
+      throw rpcResponseError(resp.statusCode, resp.headers, resp.bodyBytes)!;
     }
     // Web fetch returns the whole body at once; de-frame it into payloads.
     final chunks = Stream<List<int>>.fromIterable([resp.bodyBytes]);

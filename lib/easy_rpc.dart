@@ -63,12 +63,9 @@ int httpStatus(int code) => switch (code) {
 
 /// Reconstruct an RPCError from a response's `connect-code`/`connect-error`
 /// headers (the HTTP status alone is lossy). \`body\` is the raw error body.
-RPCError rpcErrorFrom(int status, Map<String, List<String>> headers, List<int> body) {
-  final code = headers['connect-code']?.first;
-  final c = code == null ? null : int.tryParse(code);
-  if (c != null) return RPCError(c, headers['connect-error']?.first ?? '');
-  return RPCError(connectFromStatus(status), body.isEmpty ? '' : utf8.decode(body));
-}
+/// Backward-compatible alias (delegates to [rpcResponseError]).
+RPCError rpcErrorFrom(int status, Map<String, List<String>> headers, List<int> body) =>
+    rpcResponseError(status, headers, body)!;
 
 int connectFromStatus(int status) => switch (status) {
       400 => 3,
@@ -83,6 +80,34 @@ int connectFromStatus(int status) => switch (status) {
       499 => 1,
       _ => 13,
     };
+
+/// Connect unary error body {"code":name,"message":...}.
+List<int> encodeErrorJson(int code, String message) =>
+    utf8.encode('{"code":"${codeToString(code)}","message":${jsonEncode(message)}}');
+
+/// Parse a Connect unary error body; (0, '') when not an error body.
+(int, String) decodeErrorJson(List<int> body) {
+  if (body.isEmpty) return (0, '');
+  try {
+    final v = jsonDecode(utf8.decode(body));
+    if (v is Map && v['code'] is String) {
+      return (codeFromString(v['code'] as String), (v['message'] as String?) ?? '');
+    }
+  } catch (_) {}
+  return (0, '');
+}
+
+/// Reconstruct an RPCError from a response, preferring the exact connect-code
+/// header, then the Connect JSON body, then the lossy status mapping.
+RPCError? rpcResponseError(int status, Map<String, List<String>> headers, List<int> body) {
+  if (status < 300) return null;
+  final code = headers['connect-code']?.first;
+  final c = code == null ? null : int.tryParse(code);
+  if (c != null) return RPCError(c, headers['connect-error']?.first ?? '');
+  final (c2, m2) = decodeErrorJson(body);
+  if (c2 != 0) return RPCError(c2, m2);
+  return RPCError(connectFromStatus(status), body.isEmpty ? '' : utf8.decode(body));
+}
 
 const kEndStream = 0x02;
 
@@ -305,7 +330,7 @@ class IoTransport implements Transport {
   /// headers the server sends (the HTTP status alone is lossy — several
   /// Connect codes map to 400/409/500).
   RPCError _errorOf(Headers h, int status, Uint8List body) =>
-      rpcErrorFrom(status, h, body);
+      rpcResponseError(status, h, body)!;
 
   Headers _hdrs(io.HttpHeaders h) {
     final out = <String, List<String>>{};
