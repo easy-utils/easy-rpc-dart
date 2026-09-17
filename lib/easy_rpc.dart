@@ -32,7 +32,16 @@ class Request {
   final String method;
   final Headers headers;
   final Uint8List? body;
-  Request({required this.url, this.method = 'POST', this.headers = const {}, this.body});
+  /// Local cancellation channel (a Completer that completes on abort). Adapters
+  /// that support abort honour it; others ignore it.
+  final Future<void>? abort;
+  Request({
+    required this.url,
+    this.method = 'POST',
+    this.headers = const {},
+    this.body,
+    this.abort,
+  });
 }
 
 class Response {
@@ -293,14 +302,38 @@ class MetadataInterceptor extends Interceptor {
   Future<RpcStream> stream(Request req, Future<RpcStream> Function(Request) n) => n(_aug(req));
 }
 
-/// Attach a Connect deadline to every call.
+/// Attach a Connect deadline to every call; races and aborts locally so it
+/// works over any adapter.
 class TimeoutInterceptor extends Interceptor {
   final int ms;
   TimeoutInterceptor(this.ms);
+
+  Future<T> _run<T>(Request req, Future<T> Function(Request) next) async {
+    if (ms <= 0) return next(req);
+    final ctrl = Completer<void>();
+    final withAbort = Request(
+      url: req.url,
+      method: req.method,
+      headers: req.headers,
+      body: req.body,
+      abort: ctrl.future,
+    );
+    final timed = withTimeout(withAbort, ms);
+    try {
+      return await next(timed).timeout(Duration(milliseconds: ms), onTimeout: () {
+        ctrl.complete();
+        throw RPCError(4, 'deadline exceeded');
+      });
+    } on TimeoutException {
+      ctrl.complete();
+      throw RPCError(4, 'deadline exceeded');
+    }
+  }
+
   @override
-  Future<Response> unary(Request req, Future<Response> Function(Request) n) => n(withTimeout(req, ms));
+  Future<Response> unary(Request req, Future<Response> Function(Request) n) => _run(req, n);
   @override
-  Future<RpcStream> stream(Request req, Future<RpcStream> Function(Request) n) => n(withTimeout(req, ms));
+  Future<RpcStream> stream(Request req, Future<RpcStream> Function(Request) n) => _run(req, n);
 }
 
 class IoTransport implements Transport {

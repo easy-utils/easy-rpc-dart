@@ -13,6 +13,7 @@ class _Fake implements Transport {
 void main() {
   _errorJson();
   _gzip();
+  _deadline();
   test('interceptors compose', () async {
     final f = _Fake();
     final t = InterceptorTransport(
@@ -45,5 +46,27 @@ void _gzip() {
     final reader = FrameReader();
     reader.frames(Stream<List<int>>.fromIterable([frameBytes])).listen(out.addAll);
     expect(frameBytes.length, greaterThan(5));
+  });
+}
+
+class _Slow implements Transport {
+  @override
+  Future<Response> send(Request req) => Future.delayed(const Duration(seconds: 5), () => Response(status: 200));
+  @override
+  Future<RpcStream> openStream(Request req) => throw UnimplementedError();
+}
+
+void _deadline() {
+  test('timeout interceptor cancels locally', () async {
+    final t = InterceptorTransport([TimeoutInterceptor(50)], _Slow());
+    final sw = Stopwatch()..start();
+    try {
+      await t.send(Request(url: '/x'));
+      fail('should have thrown');
+    } catch (e) {
+      expect(e, isA<RPCError>());
+      expect((e as RPCError).code, 4);
+    }
+    expect(sw.elapsedMilliseconds < 1000, isTrue);
   });
 }
