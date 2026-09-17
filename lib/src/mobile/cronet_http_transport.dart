@@ -13,12 +13,13 @@ import '../../easy_rpc.dart';
 class CronetHttpTransport implements Transport {
   /// The caller-built Cronet client (engine options — QUIC/h2, context
   /// wiring, trust configuration — live on the CronetClient the application
-  /// constructed); defaults to a plain [CronetClient].
+  /// constructed, e.g. ); defaults to
+  /// a client with a fresh default engine.
   final http.Client _client;
   final String baseUrl;
 
   CronetHttpTransport({http.Client? client, this.baseUrl = ''})
-      : _client = client ?? CronetClient();
+      : _client = client ?? CronetClient.defaultCronetEngine();
 
   String _url(String u) => u.startsWith('http') ? u : '$baseUrl$u';
 
