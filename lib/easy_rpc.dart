@@ -163,6 +163,9 @@ Uint8List encodeEndStream(int code, String message) {
 }
 
 const String kHeaderTimeout = 'connect-timeout-ms';
+const String kHeaderProtocolVersion = 'connect-protocol-version';
+const String kConnectProtocolVersion = '1';
+const int kDefaultMaxMessageBytes = 4 * 1024 * 1024;
 
 /// Parse the Connect timeout header into milliseconds (0 = none).
 int parseTimeout(String? value) {
@@ -191,6 +194,9 @@ class FrameReader {
         if (_acc.length < 5) break;
         final flags = _acc[0];
         final len = ByteData.sublistView(_acc).getUint32(1);
+        if (len > kDefaultMaxMessageBytes) {
+          throw RPCError(8, 'frame too large: $len > $kDefaultMaxMessageBytes');
+        }
         if (_acc.length < 5 + len) break;
         final payload = Uint8List.fromList(_acc.sublist(5, 5 + len));
         _acc = Uint8List.fromList(_acc.sublist(5 + len));
