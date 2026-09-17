@@ -86,12 +86,55 @@ int connectFromStatus(int status) => switch (status) {
 
 const kEndStream = 0x02;
 
+/// Connect code -> stable lowercase wire name.
+const Map<int, String> kCodeNames = {
+  0: 'ok', 1: 'canceled', 2: 'unknown', 3: 'invalid_argument',
+  4: 'deadline_exceeded', 5: 'not_found', 6: 'already_exists',
+  7: 'permission_denied', 8: 'resource_exhausted', 9: 'failed_precondition',
+  10: 'aborted', 11: 'out_of_range', 12: 'unimplemented', 13: 'internal',
+  14: 'unavailable', 15: 'data_loss', 16: 'unauthenticated',
+};
+
+String codeToString(int code) => kCodeNames[code] ?? 'unknown';
+
+int codeFromString(String name) {
+  for (final e in kCodeNames.entries) {
+    if (e.value == name) return e.key;
+  }
+  return 2;
+}
+
 Uint8List frame(Uint8List payload, {bool end = false}) {
   final out = Uint8List(5 + payload.length);
   out[0] = end ? kEndStream : 0;
   ByteData.sublistView(out).setUint32(1, payload.length);
   out.setRange(5, 5 + payload.length, payload);
   return out;
+}
+
+/// Encode an END-frame payload in the Connect end-stream JSON shape; a clean
+/// end is empty.
+Uint8List encodeEndStream(int code, String message) {
+  if (code == 0) return Uint8List(0);
+  final json = '{"error":{"code":"${codeToString(code)}",'
+      '"message":${jsonEncode(message)}}}';
+  return Uint8List.fromList(utf8.encode(json));
+}
+
+/// Decode a Connect end-stream payload into (code, message); (0, '') = clean.
+(int, String) decodeEndStream(Uint8List payload) {
+  if (payload.isEmpty) return (0, '');
+  try {
+    final v = jsonDecode(utf8.decode(payload));
+    if (v is! Map || v['error'] is! Map) return (0, '');
+    final e = v['error'] as Map;
+    return (
+      e['code'] is String ? codeFromString(e['code'] as String) : 2,
+      e['message'] is String ? e['message'] as String : '',
+    );
+  } catch (_) {
+    return (0, '');
+  }
 }
 
 class FrameReader {
@@ -106,8 +149,12 @@ class FrameReader {
         if (_acc.length < 5 + len) break;
         final payload = Uint8List.fromList(_acc.sublist(5, 5 + len));
         _acc = Uint8List.fromList(_acc.sublist(5 + len));
+        if ((flags & kEndStream) != 0) {
+          final (code, message) = decodeEndStream(payload);
+          if (code != 0) throw RPCError(code, message);
+          return;
+        }
         yield payload;
-        if ((flags & kEndStream) != 0) return;
       }
     }
   }
