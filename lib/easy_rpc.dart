@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io' as io;
 import 'dart:typed_data';
+import 'src/http2_transport.dart';
 
 
 
@@ -234,6 +235,41 @@ class FrameReader {
       }
     }
   }
+}
+
+/// Adapter modes. [auto] picks by platform.
+enum TransportMode { auto, io, http2 }
+
+/// Composition root: pick an adapter by [mode], install the built-in metadata/
+/// deadline interceptors, then any [extra]. Swapping [mode] leaves the
+/// interceptors unchanged.
+Transport connect({
+  required String baseUrl,
+  String token = '',
+  TransportMode mode = TransportMode.auto,
+  int timeoutMs = 0,
+  List<Interceptor> extra = const [],
+  io.HttpClient? httpClient,
+}) {
+  final base = baseUrl.endsWith('/')
+      ? baseUrl.substring(0, baseUrl.length - 1)
+      : baseUrl;
+  Transport inner;
+  switch (mode) {
+    case TransportMode.http2:
+      inner = Http2Transport(baseUrl: base);
+      break;
+    case TransportMode.io:
+    case TransportMode.auto:
+      inner = IoTransport(client: httpClient ?? io.HttpClient(), baseUrl: base);
+      break;
+  }
+  final ics = <Interceptor>[
+    if (token.isNotEmpty) MetadataInterceptor({'authorization': ['Bearer $token']}),
+    if (timeoutMs > 0) TimeoutInterceptor(timeoutMs),
+    ...extra,
+  ];
+  return ics.isEmpty ? inner : InterceptorTransport(ics, inner);
 }
 
 class RpcStream {

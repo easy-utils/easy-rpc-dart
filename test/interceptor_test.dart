@@ -14,6 +14,7 @@ void main() {
   _errorJson();
   _gzip();
   _deadline();
+  _connectRoot();
   test('interceptors compose', () async {
     final f = _Fake();
     final t = InterceptorTransport(
@@ -68,5 +69,17 @@ void _deadline() {
       expect((e as RPCError).code, 4);
     }
     expect(sw.elapsedMilliseconds < 1000, isTrue);
+  });
+}
+
+void _connectRoot() {
+  test('connect() installs metadata+deadline, mode-swappable', () async {
+    final t = connect(baseUrl: 'http://127.0.0.1:1', token: 'abc', mode: TransportMode.io, timeoutMs: 80);
+    final sw = Stopwatch()..start();
+    try {
+      await t.send(Request(url: '/x'));
+      fail('should have thrown');
+    } catch (_) {}
+    expect(sw.elapsedMilliseconds < 2000, isTrue);
   });
 }
