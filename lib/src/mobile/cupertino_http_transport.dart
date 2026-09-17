@@ -26,11 +26,11 @@ class CupertinoHttpTransport implements Transport {
     // cupertino_http exposes single-valued headers; widen to multi-value.
     final headers = resp.headers.map((k, v) => MapEntry(k, [v]));
     return Response(
-      status: resp.status,
+      status: resp.statusCode,
       headers: headers,
       body: resp.bodyBytes,
-      error: resp.status >= 300
-          ? rpcResponseError(resp.status, headers, resp.bodyBytes)
+      error: resp.statusCode >= 300
+          ? rpcResponseError(resp.statusCode, headers, resp.bodyBytes)
           : null,
     );
   }
