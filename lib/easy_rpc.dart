@@ -137,6 +137,26 @@ Uint8List encodeEndStream(int code, String message) {
   }
 }
 
+const String kHeaderTimeout = 'connect-timeout-ms';
+
+/// Parse the Connect timeout header into milliseconds (0 = none).
+int parseTimeout(String? value) {
+  if (value == null || value.isEmpty) return 0;
+  final n = int.tryParse(value);
+  return (n == null || n <= 0) ? 0 : n;
+}
+
+/// Attach a deadline to a request.
+Request withTimeout(Request req, int timeoutMs) {
+  if (timeoutMs <= 0) return req;
+  return Request(
+    url: req.url,
+    method: req.method,
+    headers: {...req.headers, kHeaderTimeout: ['$timeoutMs']},
+    body: req.body,
+  );
+}
+
 class FrameReader {
   Uint8List _acc = Uint8List(0);
   Stream<Uint8List> frames(Stream<List<int>> chunks) async* {
