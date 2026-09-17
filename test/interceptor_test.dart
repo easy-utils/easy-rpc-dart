@@ -11,6 +11,7 @@ class _Fake implements Transport {
 
 void main() {
   _errorJson();
+  _gzip();
   test('interceptors compose', () async {
     final f = _Fake();
     final t = InterceptorTransport(
@@ -28,5 +29,19 @@ void _errorJson() {
     final b = encodeErrorJson(7, 'denied');
     expect(decodeErrorJson(b), (7, 'denied'));
     expect(decodeErrorJson(const []), (0, ''));
+  });
+}
+
+void _gzip() {
+  test('gzip roundtrip + frame flag decompress', () {
+    final big = List<int>.generate(4096, (i) => i % 251);
+    final z = gzipCompress(big);
+    expect(z.length < big.length, isTrue);
+    expect(gzipDecompress(z), big);
+    final frameBytes = <int>[0x01, ...(z.length >> 24 & 0xff, z.length >> 16 & 0xff, z.length >> 8 & 0xff, z.length & 0xff).toList(), ...z];
+    final reader = FrameReader();
+    final frames = reader.push(Uint8List.fromList(frameBytes));
+    expect(frames.length, 1);
+    expect(frames.first.payload, big);
   });
 }

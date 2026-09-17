@@ -164,6 +164,19 @@ Uint8List encodeEndStream(int code, String message) {
 
 const String kHeaderTimeout = 'connect-timeout-ms';
 const String kHeaderProtocolVersion = 'connect-protocol-version';
+const String kHeaderAcceptEncoding = 'connect-accept-encoding';
+const String kEncodingGzip = 'gzip';
+const int kCompressMinBytes = 1024;
+
+/// gzip-compress bytes (identity on failure).
+List<int> gzipCompress(List<int> data) {
+  try { return io.GZipCodec().encode(data); } catch (_) { return data; }
+}
+
+/// gzip-decompress bytes (identity on failure).
+List<int> gzipDecompress(List<int> data) {
+  try { return io.GZipCodec().decode(data); } catch (_) { return data; }
+}
 const String kConnectProtocolVersion = '1';
 const int kDefaultMaxMessageBytes = 4 * 1024 * 1024;
 
@@ -198,8 +211,11 @@ class FrameReader {
           throw RPCError(8, 'frame too large: $len > $kDefaultMaxMessageBytes');
         }
         if (_acc.length < 5 + len) break;
-        final payload = Uint8List.fromList(_acc.sublist(5, 5 + len));
+        var payload = Uint8List.fromList(_acc.sublist(5, 5 + len));
         _acc = Uint8List.fromList(_acc.sublist(5 + len));
+        if ((flags & 0x01) != 0) {
+          payload = Uint8List.fromList(gzipDecompress(payload));
+        }
         if ((flags & kEndStream) != 0) {
           final (code, message) = decodeEndStream(payload);
           if (code != 0) throw RPCError(code, message);
