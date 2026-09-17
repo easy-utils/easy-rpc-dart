@@ -15,8 +15,10 @@ class CupertinoHttpTransport implements Transport {
 
   @override
   Future<Response> send(Request req) async {
-    final resp = await CupertinoClient().post(_url(req.url),
-        headers: req.headers, body: req.body);
+    // cupertino_http 3.x removed the default CupertinoClient() constructor;
+    // defaultSessionConfiguration() exists in 2.x and 3.x alike.
+    final resp = await CupertinoClient.defaultSessionConfiguration()
+        .post(_url(req.url), headers: req.headers, body: req.body);
     return Response(
       status: resp.status,
       headers: resp.headers,

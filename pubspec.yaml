@@ -1,6 +1,6 @@
 name: easy_rpc
 description: easy-rpc Dart core (zero-bindings Transport + Connect wire).
-version: 0.5.1
+version: 0.5.2
 publish_to: 'none'
 
 environment:
