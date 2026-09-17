@@ -197,6 +197,65 @@ abstract class Transport {
 
 /// dart:io-based bridge (HTTP/1.1 + chunked server-streams, TLS via a custom
 /// CA). This is the default native transport.
+/// A call interceptor: mutate the request (auth/metadata), impose a deadline,
+/// observe, or short-circuit. `next_` performs the call.
+abstract class Interceptor {
+  Future<Response> unary(Request req, Future<Response> Function(Request) next_) => next_(req);
+  Future<RpcStream> stream(Request req, Future<RpcStream> Function(Request) next_) => next_(req);
+}
+
+/// Apply interceptors (first = outermost) around a Transport.
+class InterceptorTransport implements Transport {
+  final List<Interceptor> _ics;
+  final Transport _inner;
+  InterceptorTransport(this._ics, this._inner);
+
+  @override
+  Future<Response> send(Request req) {
+    Future<Response> call(Request r) => _inner.send(r);
+    Future<Response> dispatch(int i, Request r) {
+      if (i >= _ics.length) return call(r);
+      return _ics[i].unary(r, (nr) => dispatch(i + 1, nr));
+    }
+    return dispatch(0, req);
+  }
+
+  @override
+  Future<RpcStream> openStream(Request req) {
+    Future<RpcStream> call(Request r) => _inner.openStream(r);
+    Future<RpcStream> dispatch(int i, Request r) {
+      if (i >= _ics.length) return call(r);
+      return _ics[i].stream(r, (nr) => dispatch(i + 1, nr));
+    }
+    return dispatch(0, req);
+  }
+}
+
+/// Attach fixed metadata to every call.
+class MetadataInterceptor extends Interceptor {
+  final Headers md;
+  MetadataInterceptor(this.md);
+  Request _aug(Request req) {
+    final h = Map<String, List<String>>.from(req.headers);
+    for (final e in md.entries) { h.putIfAbsent(e.key, () => e.value); }
+    return Request(url: req.url, method: req.method, headers: h, body: req.body);
+  }
+  @override
+  Future<Response> unary(Request req, Future<Response> Function(Request) n) => n(_aug(req));
+  @override
+  Future<RpcStream> stream(Request req, Future<RpcStream> Function(Request) n) => n(_aug(req));
+}
+
+/// Attach a Connect deadline to every call.
+class TimeoutInterceptor extends Interceptor {
+  final int ms;
+  TimeoutInterceptor(this.ms);
+  @override
+  Future<Response> unary(Request req, Future<Response> Function(Request) n) => n(withTimeout(req, ms));
+  @override
+  Future<RpcStream> stream(Request req, Future<RpcStream> Function(Request) n) => n(withTimeout(req, ms));
+}
+
 class IoTransport implements Transport {
   final io.HttpClient _client;
   final String baseUrl;
