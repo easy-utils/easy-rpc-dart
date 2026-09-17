@@ -22,7 +22,7 @@ class CupertinoHttpTransport implements Transport {
     // cupertino_http 3.x removed the default CupertinoClient() constructor;
     // defaultSessionConfiguration() exists in 2.x and 3.x alike.
     final resp = await CupertinoClient.defaultSessionConfiguration()
-        .post(_url(req.url), headers: _flatHeaders(req.headers), body: req.body);
+        .post(Uri.parse(_url(req.url)), headers: _flatHeaders(req.headers), body: req.body);
     // cupertino_http exposes single-valued headers; widen to multi-value.
     final headers = resp.headers.map((k, v) => MapEntry(k, [v]));
     return Response(
