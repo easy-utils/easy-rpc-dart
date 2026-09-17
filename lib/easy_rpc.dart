@@ -20,10 +20,37 @@ export 'src/easyrpc/conformance/v1/conformance.pb.dart';
 
 typedef Headers = Map<String, List<String>>;
 
+/// A structured error detail (spec §4.1, aligned with Connect Error Details /
+/// gRPC google.rpc status details). [type] is a type URL; [value] is opaque
+/// bytes (typically an encoded protobuf message).
+class ErrorDetail {
+  final String type;
+  final Uint8List value;
+  const ErrorDetail(this.type, this.value);
+  @override
+  bool operator ==(Object other) =>
+      other is ErrorDetail &&
+      other.type == type &&
+      other.value.length == value.length &&
+      _bytesEqual(other.value, value);
+  @override
+  int get hashCode => Object.hash(type, Object.hashAll(value));
+  static bool _bytesEqual(Uint8List a, Uint8List b) {
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
+  }
+  @override
+  String toString() => 'ErrorDetail($type, ${value.length}B)';
+}
+
 class RPCError implements Exception {
   final int code;
   final String message;
-  RPCError(this.code, this.message);
+  /// Optional structured details (spec §4.1); opaque to the wire layer.
+  final List<ErrorDetail>? details;
+  RPCError(this.code, this.message, [this.details]);
   @override
   String toString() => 'easyrpc: code=$code $message';
 }
@@ -91,20 +118,52 @@ int connectFromStatus(int status) => switch (status) {
       _ => 13,
     };
 
-/// Connect unary error body {"code":name,"message":...}.
-List<int> encodeErrorJson(int code, String message) =>
-    utf8.encode('{"code":"${codeToString(code)}","message":${jsonEncode(message)}}');
+List<Map<String, String>> _wireDetails(List<ErrorDetail>? details) =>
+    (details ?? const [])
+        .map((d) => {'type': d.type, 'value': base64.encode(d.value)})
+        .toList();
 
-/// Parse a Connect unary error body; (0, '') when not an error body.
-(int, String) decodeErrorJson(List<int> body) {
-  if (body.isEmpty) return (0, '');
+/// Parse the wire details array; malformed entries are skipped, never fatal
+/// (matrix M7).
+List<ErrorDetail>? _parseWireDetails(Object? v) {
+  if (v is! List) return null;
+  final out = <ErrorDetail>[];
+  for (final el in v) {
+    if (el is! Map) continue;
+    final t = el['type'];
+    final val = el['value'];
+    if (t is! String || t.isEmpty || val is! String || val.isEmpty) continue;
+    try {
+      out.add(ErrorDetail(t, base64.decode(val)));
+    } catch (_) {
+      // invalid base64: skip the entry
+    }
+  }
+  return out.isEmpty ? null : out;
+}
+
+/// Connect unary error body {"code":name,"message":...[,details]}.
+List<int> encodeErrorJson(int code, String message, [List<ErrorDetail>? details]) {
+  final body = <String, Object?>{'code': codeToString(code), 'message': message};
+  final wire = _wireDetails(details);
+  if (wire.isNotEmpty) body['details'] = wire;
+  return utf8.encode(jsonEncode(body));
+}
+
+/// Parse a Connect unary error body; (0, '', null) when not an error body.
+(int, String, List<ErrorDetail>?) decodeErrorJson(List<int> body) {
+  if (body.isEmpty) return (0, '', null);
   try {
     final v = jsonDecode(utf8.decode(body));
     if (v is Map && v['code'] is String) {
-      return (codeFromString(v['code'] as String), (v['message'] as String?) ?? '');
+      return (
+        codeFromString(v['code'] as String),
+        (v['message'] as String?) ?? '',
+        _parseWireDetails(v['details']),
+      );
     }
   } catch (_) {}
-  return (0, '');
+  return (0, '', null);
 }
 
 /// Reconstruct an RPCError from a response, preferring the exact connect-code
@@ -113,9 +172,14 @@ RPCError? rpcResponseError(int status, Map<String, List<String>> headers, List<i
   if (status < 300) return null;
   final code = headers['connect-code']?.first;
   final c = code == null ? null : int.tryParse(code);
-  if (c != null) return RPCError(c, headers['connect-error']?.first ?? '');
-  final (c2, m2) = decodeErrorJson(body);
-  if (c2 != 0) return RPCError(c2, m2);
+  if (c != null) {
+    // The header carries the exact code; the JSON body (when present) may
+    // still carry details - merge them (details never travel in headers).
+    final (_, _, hd) = decodeErrorJson(body);
+    return RPCError(c, headers['connect-error']?.first ?? '', hd);
+  }
+  final (c2, m2, d2) = decodeErrorJson(body);
+  if (c2 != 0) return RPCError(c2, m2, d2);
   return RPCError(connectFromStatus(status), body.isEmpty ? '' : utf8.decode(body));
 }
 
@@ -148,27 +212,31 @@ Uint8List frame(Uint8List payload, {bool end = false}) {
 }
 
 /// Encode an END-frame payload in the Connect end-stream JSON shape; a clean
-/// end is empty.
-Uint8List encodeEndStream(int code, String message) {
+/// end is empty. Details (spec §4.1) are included when non-empty.
+Uint8List encodeEndStream(int code, String message, [List<ErrorDetail>? details]) {
   if (code == 0) return Uint8List(0);
-  final json = '{"error":{"code":"${codeToString(code)}",'
-      '"message":${jsonEncode(message)}}}';
-  return Uint8List.fromList(utf8.encode(json));
+  final err = <String, Object?>{'code': codeToString(code), 'message': message};
+  final wire = _wireDetails(details);
+  if (wire.isNotEmpty) err['details'] = wire;
+  return Uint8List.fromList(utf8.encode(jsonEncode({'error': err})));
 }
 
-/// Decode a Connect end-stream payload into (code, message); (0, '') = clean.
-(int, String) decodeEndStream(Uint8List payload) {
-  if (payload.isEmpty) return (0, '');
+/// Decode a Connect end-stream payload into (code, message, details);
+/// (0, '', null) = clean end. Malformed input is a clean end (matrix M2); an
+/// error object without a code maps to 2 (M3/M4); unknown fields ignored (M5).
+(int, String, List<ErrorDetail>?) decodeEndStream(Uint8List payload) {
+  if (payload.isEmpty) return (0, '', null);
   try {
     final v = jsonDecode(utf8.decode(payload));
-    if (v is! Map || v['error'] is! Map) return (0, '');
+    if (v is! Map || v['error'] is! Map) return (0, '', null);
     final e = v['error'] as Map;
     return (
       e['code'] is String ? codeFromString(e['code'] as String) : 2,
       e['message'] is String ? e['message'] as String : '',
+      _parseWireDetails(e['details']),
     );
   } catch (_) {
-    return (0, '');
+    return (0, '', null);
   }
 }
 
@@ -227,8 +295,8 @@ class FrameReader {
           payload = Uint8List.fromList(gzipDecompress(payload));
         }
         if ((flags & kEndStream) != 0) {
-          final (code, message) = decodeEndStream(payload);
-          if (code != 0) throw RPCError(code, message);
+          final (code, message, details) = decodeEndStream(payload);
+          if (code != 0) throw RPCError(code, message, details);
           return;
         }
         yield payload;

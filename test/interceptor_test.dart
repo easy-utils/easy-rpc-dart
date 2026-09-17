@@ -30,8 +30,9 @@ void main() {
 void _errorJson() {
   test('error json roundtrip', () {
     final b = encodeErrorJson(7, 'denied');
-    expect(decodeErrorJson(b), (7, 'denied'));
-    expect(decodeErrorJson(const []), (0, ''));
+    final (c, m, d) = decodeErrorJson(b);
+    expect((c, m, d), (7, 'denied', null));
+    expect(decodeErrorJson(const []), (0, '', null));
   });
 }
 
