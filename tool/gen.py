@@ -118,9 +118,8 @@ def main():
             L.append('')
             L.append(f'class {client} {{')
             L.append('  final Transport _t;')
-            L.append('  final Map<String, List<String>> _md;')
-            L.append(f'  {client}(this._t, [Map<String, List<String>>? metadata]) : _md = metadata ?? const {{}};')
-            L.append('  Request _req(String url, [Uint8List? body]) => Request(url: url, method: \'POST\', body: body, headers: _md);')
+            L.append(f'  {client}(this._t);')
+            L.append('  Request _req(String url, [Uint8List? body]) => Request(url: url, method: \'POST\', body: body);')
             L.append('')
             for (svc, name, path, ss, it, ot) in methods:
                 if ss:
