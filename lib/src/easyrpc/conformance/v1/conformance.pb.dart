@@ -21,7 +21,7 @@ class EchoRequest extends $pb.GeneratedMessage {
   factory EchoRequest({
     $core.String? input,
   }) {
-    final result = create();
+    final result = EchoRequest._();
     if (input != null) result.input = input;
     return result;
   }
@@ -30,16 +30,16 @@ class EchoRequest extends $pb.GeneratedMessage {
 
   factory EchoRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      EchoRequest()..mergeFromBuffer(data, registry);
   factory EchoRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      EchoRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EchoRequest',
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: EchoRequest.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'input')
     ..hasRequiredFields = false;
 
@@ -54,12 +54,15 @@ class EchoRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EchoRequest() / EchoRequest.new instead')
   static EchoRequest create() => EchoRequest._();
+  static $pb.GeneratedMessage $_createMessage() => EchoRequest._();
   @$core.override
-  EchoRequest createEmptyInstance() => create();
+  EchoRequest createEmptyInstance() => EchoRequest._();
   @$core.pragma('dart2js:noInline')
-  static EchoRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<EchoRequest>(create);
+  static EchoRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EchoRequest>(
+          EchoRequest.$_createMessage);
   static EchoRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -76,7 +79,7 @@ class EchoResponse extends $pb.GeneratedMessage {
   factory EchoResponse({
     $core.String? output,
   }) {
-    final result = create();
+    final result = EchoResponse._();
     if (output != null) result.output = output;
     return result;
   }
@@ -85,16 +88,16 @@ class EchoResponse extends $pb.GeneratedMessage {
 
   factory EchoResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      EchoResponse()..mergeFromBuffer(data, registry);
   factory EchoResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      EchoResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EchoResponse',
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: EchoResponse.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'output')
     ..hasRequiredFields = false;
 
@@ -109,12 +112,15 @@ class EchoResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EchoResponse() / EchoResponse.new instead')
   static EchoResponse create() => EchoResponse._();
+  static $pb.GeneratedMessage $_createMessage() => EchoResponse._();
   @$core.override
-  EchoResponse createEmptyInstance() => create();
+  EchoResponse createEmptyInstance() => EchoResponse._();
   @$core.pragma('dart2js:noInline')
-  static EchoResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<EchoResponse>(create);
+  static EchoResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EchoResponse>(
+          EchoResponse.$_createMessage);
   static EchoResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -131,7 +137,7 @@ class CountRequest extends $pb.GeneratedMessage {
   factory CountRequest({
     $core.int? count,
   }) {
-    final result = create();
+    final result = CountRequest._();
     if (count != null) result.count = count;
     return result;
   }
@@ -140,16 +146,16 @@ class CountRequest extends $pb.GeneratedMessage {
 
   factory CountRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      CountRequest()..mergeFromBuffer(data, registry);
   factory CountRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      CountRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CountRequest',
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: CountRequest.$_createMessage)
     ..aI(1, _omitFieldNames ? '' : 'count')
     ..hasRequiredFields = false;
 
@@ -164,12 +170,15 @@ class CountRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use CountRequest() / CountRequest.new instead')
   static CountRequest create() => CountRequest._();
+  static $pb.GeneratedMessage $_createMessage() => CountRequest._();
   @$core.override
-  CountRequest createEmptyInstance() => create();
+  CountRequest createEmptyInstance() => CountRequest._();
   @$core.pragma('dart2js:noInline')
-  static CountRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<CountRequest>(create);
+  static CountRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CountRequest>(
+          CountRequest.$_createMessage);
   static CountRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -186,7 +195,7 @@ class CountResponse extends $pb.GeneratedMessage {
   factory CountResponse({
     $core.int? index,
   }) {
-    final result = create();
+    final result = CountResponse._();
     if (index != null) result.index = index;
     return result;
   }
@@ -195,16 +204,16 @@ class CountResponse extends $pb.GeneratedMessage {
 
   factory CountResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      CountResponse()..mergeFromBuffer(data, registry);
   factory CountResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      CountResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CountResponse',
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: CountResponse.$_createMessage)
     ..aI(1, _omitFieldNames ? '' : 'index')
     ..hasRequiredFields = false;
 
@@ -219,12 +228,15 @@ class CountResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use CountResponse() / CountResponse.new instead')
   static CountResponse create() => CountResponse._();
+  static $pb.GeneratedMessage $_createMessage() => CountResponse._();
   @$core.override
-  CountResponse createEmptyInstance() => create();
+  CountResponse createEmptyInstance() => CountResponse._();
   @$core.pragma('dart2js:noInline')
-  static CountResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<CountResponse>(create);
+  static CountResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CountResponse>(
+          CountResponse.$_createMessage);
   static CountResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -241,7 +253,7 @@ class FailRequest extends $pb.GeneratedMessage {
   factory FailRequest({
     $core.String? message,
   }) {
-    final result = create();
+    final result = FailRequest._();
     if (message != null) result.message = message;
     return result;
   }
@@ -250,16 +262,16 @@ class FailRequest extends $pb.GeneratedMessage {
 
   factory FailRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      FailRequest()..mergeFromBuffer(data, registry);
   factory FailRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      FailRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FailRequest',
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: FailRequest.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'message')
     ..hasRequiredFields = false;
 
@@ -274,12 +286,15 @@ class FailRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use FailRequest() / FailRequest.new instead')
   static FailRequest create() => FailRequest._();
+  static $pb.GeneratedMessage $_createMessage() => FailRequest._();
   @$core.override
-  FailRequest createEmptyInstance() => create();
+  FailRequest createEmptyInstance() => FailRequest._();
   @$core.pragma('dart2js:noInline')
-  static FailRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<FailRequest>(create);
+  static FailRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FailRequest>(
+          FailRequest.$_createMessage);
   static FailRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -296,7 +311,7 @@ class FailResponse extends $pb.GeneratedMessage {
   factory FailResponse({
     $core.bool? ok,
   }) {
-    final result = create();
+    final result = FailResponse._();
     if (ok != null) result.ok = ok;
     return result;
   }
@@ -305,16 +320,16 @@ class FailResponse extends $pb.GeneratedMessage {
 
   factory FailResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      FailResponse()..mergeFromBuffer(data, registry);
   factory FailResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      FailResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FailResponse',
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: FailResponse.$_createMessage)
     ..aOB(1, _omitFieldNames ? '' : 'ok')
     ..hasRequiredFields = false;
 
@@ -329,12 +344,15 @@ class FailResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use FailResponse() / FailResponse.new instead')
   static FailResponse create() => FailResponse._();
+  static $pb.GeneratedMessage $_createMessage() => FailResponse._();
   @$core.override
-  FailResponse createEmptyInstance() => create();
+  FailResponse createEmptyInstance() => FailResponse._();
   @$core.pragma('dart2js:noInline')
-  static FailResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<FailResponse>(create);
+  static FailResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FailResponse>(
+          FailResponse.$_createMessage);
   static FailResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -348,22 +366,22 @@ class FailResponse extends $pb.GeneratedMessage {
 }
 
 class HealthRequest extends $pb.GeneratedMessage {
-  factory HealthRequest() => create();
+  factory HealthRequest() => HealthRequest._();
 
   HealthRequest._();
 
   factory HealthRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      HealthRequest()..mergeFromBuffer(data, registry);
   factory HealthRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      HealthRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'HealthRequest',
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: HealthRequest.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -377,12 +395,15 @@ class HealthRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use HealthRequest() / HealthRequest.new instead')
   static HealthRequest create() => HealthRequest._();
+  static $pb.GeneratedMessage $_createMessage() => HealthRequest._();
   @$core.override
-  HealthRequest createEmptyInstance() => create();
+  HealthRequest createEmptyInstance() => HealthRequest._();
   @$core.pragma('dart2js:noInline')
-  static HealthRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<HealthRequest>(create);
+  static HealthRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HealthRequest>(
+          HealthRequest.$_createMessage);
   static HealthRequest? _defaultInstance;
 }
 
@@ -391,7 +412,7 @@ class HealthResponse extends $pb.GeneratedMessage {
     $core.bool? ok,
     $core.String? name,
   }) {
-    final result = create();
+    final result = HealthResponse._();
     if (ok != null) result.ok = ok;
     if (name != null) result.name = name;
     return result;
@@ -401,16 +422,16 @@ class HealthResponse extends $pb.GeneratedMessage {
 
   factory HealthResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      HealthResponse()..mergeFromBuffer(data, registry);
   factory HealthResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      HealthResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'HealthResponse',
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: HealthResponse.$_createMessage)
     ..aOB(1, _omitFieldNames ? '' : 'ok')
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..hasRequiredFields = false;
@@ -426,12 +447,15 @@ class HealthResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use HealthResponse() / HealthResponse.new instead')
   static HealthResponse create() => HealthResponse._();
+  static $pb.GeneratedMessage $_createMessage() => HealthResponse._();
   @$core.override
-  HealthResponse createEmptyInstance() => create();
+  HealthResponse createEmptyInstance() => HealthResponse._();
   @$core.pragma('dart2js:noInline')
-  static HealthResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<HealthResponse>(create);
+  static HealthResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HealthResponse>(
+          HealthResponse.$_createMessage);
   static HealthResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -451,6 +475,711 @@ class HealthResponse extends $pb.GeneratedMessage {
   $core.bool hasName() => $_has(1);
   @$pb.TagNumber(2)
   void clearName() => $_clearField(2);
+}
+
+class StreamFailRequest extends $pb.GeneratedMessage {
+  factory StreamFailRequest({
+    $core.int? emitBefore,
+    $core.int? code,
+    $core.String? message,
+  }) {
+    final result = StreamFailRequest._();
+    if (emitBefore != null) result.emitBefore = emitBefore;
+    if (code != null) result.code = code;
+    if (message != null) result.message = message;
+    return result;
+  }
+
+  StreamFailRequest._();
+
+  factory StreamFailRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      StreamFailRequest()..mergeFromBuffer(data, registry);
+  factory StreamFailRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      StreamFailRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StreamFailRequest',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: StreamFailRequest.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'emitBefore')
+    ..aI(2, _omitFieldNames ? '' : 'code')
+    ..aOS(3, _omitFieldNames ? '' : 'message')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StreamFailRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StreamFailRequest copyWith(void Function(StreamFailRequest) updates) =>
+      super.copyWith((message) => updates(message as StreamFailRequest))
+          as StreamFailRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use StreamFailRequest() / StreamFailRequest.new instead')
+  static StreamFailRequest create() => StreamFailRequest._();
+  static $pb.GeneratedMessage $_createMessage() => StreamFailRequest._();
+  @$core.override
+  StreamFailRequest createEmptyInstance() => StreamFailRequest._();
+  @$core.pragma('dart2js:noInline')
+  static StreamFailRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StreamFailRequest>(
+          StreamFailRequest.$_createMessage);
+  static StreamFailRequest? _defaultInstance;
+
+  /// Emit this many data frames, then fail with `code`.
+  @$pb.TagNumber(1)
+  $core.int get emitBefore => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set emitBefore($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasEmitBefore() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEmitBefore() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get code => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set code($core.int value) => $_setSignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasCode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCode() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get message => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set message($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasMessage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMessage() => $_clearField(3);
+}
+
+class StreamFailResponse extends $pb.GeneratedMessage {
+  factory StreamFailResponse({
+    $core.int? index,
+  }) {
+    final result = StreamFailResponse._();
+    if (index != null) result.index = index;
+    return result;
+  }
+
+  StreamFailResponse._();
+
+  factory StreamFailResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      StreamFailResponse()..mergeFromBuffer(data, registry);
+  factory StreamFailResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      StreamFailResponse()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StreamFailResponse',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: StreamFailResponse.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'index')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StreamFailResponse clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StreamFailResponse copyWith(void Function(StreamFailResponse) updates) =>
+      super.copyWith((message) => updates(message as StreamFailResponse))
+          as StreamFailResponse;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use StreamFailResponse() / StreamFailResponse.new instead')
+  static StreamFailResponse create() => StreamFailResponse._();
+  static $pb.GeneratedMessage $_createMessage() => StreamFailResponse._();
+  @$core.override
+  StreamFailResponse createEmptyInstance() => StreamFailResponse._();
+  @$core.pragma('dart2js:noInline')
+  static StreamFailResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StreamFailResponse>(
+          StreamFailResponse.$_createMessage);
+  static StreamFailResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get index => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set index($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasIndex() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIndex() => $_clearField(1);
+}
+
+class EchoMetaRequest extends $pb.GeneratedMessage {
+  factory EchoMetaRequest({
+    $core.String? input,
+  }) {
+    final result = EchoMetaRequest._();
+    if (input != null) result.input = input;
+    return result;
+  }
+
+  EchoMetaRequest._();
+
+  factory EchoMetaRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EchoMetaRequest()..mergeFromBuffer(data, registry);
+  factory EchoMetaRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EchoMetaRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EchoMetaRequest',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: EchoMetaRequest.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'input')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EchoMetaRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EchoMetaRequest copyWith(void Function(EchoMetaRequest) updates) =>
+      super.copyWith((message) => updates(message as EchoMetaRequest))
+          as EchoMetaRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EchoMetaRequest() / EchoMetaRequest.new instead')
+  static EchoMetaRequest create() => EchoMetaRequest._();
+  static $pb.GeneratedMessage $_createMessage() => EchoMetaRequest._();
+  @$core.override
+  EchoMetaRequest createEmptyInstance() => EchoMetaRequest._();
+  @$core.pragma('dart2js:noInline')
+  static EchoMetaRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EchoMetaRequest>(
+          EchoMetaRequest.$_createMessage);
+  static EchoMetaRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get input => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set input($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasInput() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearInput() => $_clearField(1);
+}
+
+class EchoMetaResponse extends $pb.GeneratedMessage {
+  factory EchoMetaResponse({
+    $core.String? input,
+    $core.Iterable<$core.MapEntry<$core.String, $core.String>>? meta,
+  }) {
+    final result = EchoMetaResponse._();
+    if (input != null) result.input = input;
+    if (meta != null) result.meta.addEntries(meta);
+    return result;
+  }
+
+  EchoMetaResponse._();
+
+  factory EchoMetaResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EchoMetaResponse()..mergeFromBuffer(data, registry);
+  factory EchoMetaResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EchoMetaResponse()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EchoMetaResponse',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: EchoMetaResponse.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'input')
+    ..m<$core.String, $core.String>(2, _omitFieldNames ? '' : 'meta',
+        entryClassName: 'EchoMetaResponse.MetaEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.OS,
+        packageName: const $pb.PackageName('easyrpc.conformance.v1'))
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EchoMetaResponse clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EchoMetaResponse copyWith(void Function(EchoMetaResponse) updates) =>
+      super.copyWith((message) => updates(message as EchoMetaResponse))
+          as EchoMetaResponse;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EchoMetaResponse() / EchoMetaResponse.new instead')
+  static EchoMetaResponse create() => EchoMetaResponse._();
+  static $pb.GeneratedMessage $_createMessage() => EchoMetaResponse._();
+  @$core.override
+  EchoMetaResponse createEmptyInstance() => EchoMetaResponse._();
+  @$core.pragma('dart2js:noInline')
+  static EchoMetaResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EchoMetaResponse>(
+          EchoMetaResponse.$_createMessage);
+  static EchoMetaResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get input => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set input($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasInput() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearInput() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $pb.PbMap<$core.String, $core.String> get meta => $_getMap(1);
+}
+
+class BigRequest extends $pb.GeneratedMessage {
+  factory BigRequest({
+    $core.int? size,
+  }) {
+    final result = BigRequest._();
+    if (size != null) result.size = size;
+    return result;
+  }
+
+  BigRequest._();
+
+  factory BigRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BigRequest()..mergeFromBuffer(data, registry);
+  factory BigRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BigRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'BigRequest',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: BigRequest.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'size')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BigRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BigRequest copyWith(void Function(BigRequest) updates) =>
+      super.copyWith((message) => updates(message as BigRequest)) as BigRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use BigRequest() / BigRequest.new instead')
+  static BigRequest create() => BigRequest._();
+  static $pb.GeneratedMessage $_createMessage() => BigRequest._();
+  @$core.override
+  BigRequest createEmptyInstance() => BigRequest._();
+  @$core.pragma('dart2js:noInline')
+  static BigRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<BigRequest>(BigRequest.$_createMessage);
+  static BigRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get size => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set size($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasSize() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSize() => $_clearField(1);
+}
+
+class BigResponse extends $pb.GeneratedMessage {
+  factory BigResponse({
+    $core.int? size,
+  }) {
+    final result = BigResponse._();
+    if (size != null) result.size = size;
+    return result;
+  }
+
+  BigResponse._();
+
+  factory BigResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BigResponse()..mergeFromBuffer(data, registry);
+  factory BigResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BigResponse()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'BigResponse',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: BigResponse.$_createMessage)
+    ..aI(2, _omitFieldNames ? '' : 'size')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BigResponse clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BigResponse copyWith(void Function(BigResponse) updates) =>
+      super.copyWith((message) => updates(message as BigResponse))
+          as BigResponse;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use BigResponse() / BigResponse.new instead')
+  static BigResponse create() => BigResponse._();
+  static $pb.GeneratedMessage $_createMessage() => BigResponse._();
+  @$core.override
+  BigResponse createEmptyInstance() => BigResponse._();
+  @$core.pragma('dart2js:noInline')
+  static BigResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BigResponse>(
+          BigResponse.$_createMessage);
+  static BigResponse? _defaultInstance;
+
+  @$pb.TagNumber(2)
+  $core.int get size => $_getIZ(0);
+  @$pb.TagNumber(2)
+  set size($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(2)
+  $core.bool hasSize() => $_has(0);
+  @$pb.TagNumber(2)
+  void clearSize() => $_clearField(2);
+}
+
+class FailDetailsRequest extends $pb.GeneratedMessage {
+  factory FailDetailsRequest({
+    $core.int? code,
+    $core.String? message,
+    $core.String? detailType,
+    $core.String? detailText,
+  }) {
+    final result = FailDetailsRequest._();
+    if (code != null) result.code = code;
+    if (message != null) result.message = message;
+    if (detailType != null) result.detailType = detailType;
+    if (detailText != null) result.detailText = detailText;
+    return result;
+  }
+
+  FailDetailsRequest._();
+
+  factory FailDetailsRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      FailDetailsRequest()..mergeFromBuffer(data, registry);
+  factory FailDetailsRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      FailDetailsRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'FailDetailsRequest',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: FailDetailsRequest.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'code')
+    ..aOS(2, _omitFieldNames ? '' : 'message')
+    ..aOS(3, _omitFieldNames ? '' : 'detailType')
+    ..aOS(4, _omitFieldNames ? '' : 'detailText')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FailDetailsRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FailDetailsRequest copyWith(void Function(FailDetailsRequest) updates) =>
+      super.copyWith((message) => updates(message as FailDetailsRequest))
+          as FailDetailsRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use FailDetailsRequest() / FailDetailsRequest.new instead')
+  static FailDetailsRequest create() => FailDetailsRequest._();
+  static $pb.GeneratedMessage $_createMessage() => FailDetailsRequest._();
+  @$core.override
+  FailDetailsRequest createEmptyInstance() => FailDetailsRequest._();
+  @$core.pragma('dart2js:noInline')
+  static FailDetailsRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<FailDetailsRequest>(
+          FailDetailsRequest.$_createMessage);
+  static FailDetailsRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get code => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set code($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasCode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCode() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get message => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set message($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasMessage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMessage() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get detailType => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set detailType($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasDetailType() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDetailType() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get detailText => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set detailText($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasDetailText() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearDetailText() => $_clearField(4);
+}
+
+class FailDetailsResponse extends $pb.GeneratedMessage {
+  factory FailDetailsResponse({
+    $core.bool? ok,
+  }) {
+    final result = FailDetailsResponse._();
+    if (ok != null) result.ok = ok;
+    return result;
+  }
+
+  FailDetailsResponse._();
+
+  factory FailDetailsResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      FailDetailsResponse()..mergeFromBuffer(data, registry);
+  factory FailDetailsResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      FailDetailsResponse()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'FailDetailsResponse',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: FailDetailsResponse.$_createMessage)
+    ..aOB(1, _omitFieldNames ? '' : 'ok')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FailDetailsResponse clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FailDetailsResponse copyWith(void Function(FailDetailsResponse) updates) =>
+      super.copyWith((message) => updates(message as FailDetailsResponse))
+          as FailDetailsResponse;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core
+      .Deprecated('Use FailDetailsResponse() / FailDetailsResponse.new instead')
+  static FailDetailsResponse create() => FailDetailsResponse._();
+  static $pb.GeneratedMessage $_createMessage() => FailDetailsResponse._();
+  @$core.override
+  FailDetailsResponse createEmptyInstance() => FailDetailsResponse._();
+  @$core.pragma('dart2js:noInline')
+  static FailDetailsResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<FailDetailsResponse>(
+          FailDetailsResponse.$_createMessage);
+  static FailDetailsResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get ok => $_getBF(0);
+  @$pb.TagNumber(1)
+  set ok($core.bool value) => $_setBool(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasOk() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearOk() => $_clearField(1);
+}
+
+class StreamFailDetailsRequest extends $pb.GeneratedMessage {
+  factory StreamFailDetailsRequest({
+    $core.int? emitBefore,
+    $core.int? code,
+    $core.String? message,
+    $core.String? detailType,
+    $core.String? detailText,
+  }) {
+    final result = StreamFailDetailsRequest._();
+    if (emitBefore != null) result.emitBefore = emitBefore;
+    if (code != null) result.code = code;
+    if (message != null) result.message = message;
+    if (detailType != null) result.detailType = detailType;
+    if (detailText != null) result.detailText = detailText;
+    return result;
+  }
+
+  StreamFailDetailsRequest._();
+
+  factory StreamFailDetailsRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      StreamFailDetailsRequest()..mergeFromBuffer(data, registry);
+  factory StreamFailDetailsRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      StreamFailDetailsRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StreamFailDetailsRequest',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: StreamFailDetailsRequest.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'emitBefore')
+    ..aI(2, _omitFieldNames ? '' : 'code')
+    ..aOS(3, _omitFieldNames ? '' : 'message')
+    ..aOS(4, _omitFieldNames ? '' : 'detailType')
+    ..aOS(5, _omitFieldNames ? '' : 'detailText')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StreamFailDetailsRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StreamFailDetailsRequest copyWith(
+          void Function(StreamFailDetailsRequest) updates) =>
+      super.copyWith((message) => updates(message as StreamFailDetailsRequest))
+          as StreamFailDetailsRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use StreamFailDetailsRequest() / StreamFailDetailsRequest.new instead')
+  static StreamFailDetailsRequest create() => StreamFailDetailsRequest._();
+  static $pb.GeneratedMessage $_createMessage() => StreamFailDetailsRequest._();
+  @$core.override
+  StreamFailDetailsRequest createEmptyInstance() =>
+      StreamFailDetailsRequest._();
+  @$core.pragma('dart2js:noInline')
+  static StreamFailDetailsRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StreamFailDetailsRequest>(
+          StreamFailDetailsRequest.$_createMessage);
+  static StreamFailDetailsRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get emitBefore => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set emitBefore($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasEmitBefore() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEmitBefore() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get code => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set code($core.int value) => $_setSignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasCode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCode() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get message => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set message($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasMessage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMessage() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get detailType => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set detailType($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasDetailType() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearDetailType() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get detailText => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set detailText($core.String value) => $_setString(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasDetailText() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearDetailText() => $_clearField(5);
+}
+
+class StreamFailDetailsResponse extends $pb.GeneratedMessage {
+  factory StreamFailDetailsResponse({
+    $core.int? index,
+  }) {
+    final result = StreamFailDetailsResponse._();
+    if (index != null) result.index = index;
+    return result;
+  }
+
+  StreamFailDetailsResponse._();
+
+  factory StreamFailDetailsResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      StreamFailDetailsResponse()..mergeFromBuffer(data, registry);
+  factory StreamFailDetailsResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      StreamFailDetailsResponse()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StreamFailDetailsResponse',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: StreamFailDetailsResponse.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'index')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StreamFailDetailsResponse clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StreamFailDetailsResponse copyWith(
+          void Function(StreamFailDetailsResponse) updates) =>
+      super.copyWith((message) => updates(message as StreamFailDetailsResponse))
+          as StreamFailDetailsResponse;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use StreamFailDetailsResponse() / StreamFailDetailsResponse.new instead')
+  static StreamFailDetailsResponse create() => StreamFailDetailsResponse._();
+  static $pb.GeneratedMessage $_createMessage() =>
+      StreamFailDetailsResponse._();
+  @$core.override
+  StreamFailDetailsResponse createEmptyInstance() =>
+      StreamFailDetailsResponse._();
+  @$core.pragma('dart2js:noInline')
+  static StreamFailDetailsResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StreamFailDetailsResponse>(
+          StreamFailDetailsResponse.$_createMessage);
+  static StreamFailDetailsResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get index => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set index($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasIndex() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIndex() => $_clearField(1);
 }
 
 class ConformanceServiceApi {
@@ -474,6 +1203,35 @@ class ConformanceServiceApi {
           $pb.ClientContext? ctx, FailRequest request) =>
       _client.invoke<FailResponse>(
           ctx, 'ConformanceService', 'Fail', request, FailResponse());
+
+  /// Emit N frames then end the stream with a Connect end-stream error.
+  $async.Future<StreamFailResponse> streamFail(
+          $pb.ClientContext? ctx, StreamFailRequest request) =>
+      _client.invoke<StreamFailResponse>(ctx, 'ConformanceService',
+          'StreamFail', request, StreamFailResponse());
+
+  /// Echo selected request metadata back in the response.
+  $async.Future<EchoMetaResponse> echoMeta(
+          $pb.ClientContext? ctx, EchoMetaRequest request) =>
+      _client.invoke<EchoMetaResponse>(
+          ctx, 'ConformanceService', 'EchoMeta', request, EchoMetaResponse());
+
+  /// Return `size` bytes to exercise max-message behavior.
+  $async.Future<BigResponse> big($pb.ClientContext? ctx, BigRequest request) =>
+      _client.invoke<BigResponse>(
+          ctx, 'ConformanceService', 'Big', request, BigResponse());
+
+  /// Fail the unary call with an error carrying structured details.
+  $async.Future<FailDetailsResponse> failDetails(
+          $pb.ClientContext? ctx, FailDetailsRequest request) =>
+      _client.invoke<FailDetailsResponse>(ctx, 'ConformanceService',
+          'FailDetails', request, FailDetailsResponse());
+
+  /// Emit N frames, then fail the stream with an error carrying details.
+  $async.Future<StreamFailDetailsResponse> streamFailDetails(
+          $pb.ClientContext? ctx, StreamFailDetailsRequest request) =>
+      _client.invoke<StreamFailDetailsResponse>(ctx, 'ConformanceService',
+          'StreamFailDetails', request, StreamFailDetailsResponse());
 }
 
 const $core.bool _omitFieldNames =

@@ -43,7 +43,7 @@ void _gzip() {
     expect(z.length < big.length, isTrue);
     expect(gzipDecompress(z), big);
     final lenBytes = <int>[z.length >> 24 & 0xff, z.length >> 16 & 0xff, z.length >> 8 & 0xff, z.length & 0xff];
-    final frameBytes = <int>[0x01, ...lenBytes, ...z];
+    final frameBytes = <int>[0x01, ...lenBytes, ...z, 0x02, 0, 0, 0, 0]; // + END frame
     final out = <int>[];
     final reader = FrameReader();
     reader.frames(Stream<List<int>>.fromIterable([frameBytes])).listen(out.addAll);

@@ -5,9 +5,8 @@ import 'package:easy_rpc/src/easyrpc/conformance/v1/conformance.pb.dart' as m;
 
 class ConformanceServiceClient {
   final Transport _t;
-  final Map<String, List<String>> _md;
-  ConformanceServiceClient(this._t, [Map<String, List<String>>? metadata]) : _md = metadata ?? const {};
-  Request _req(String url, [Uint8List? body]) => Request(url: url, method: 'POST', body: body, headers: _md);
+  ConformanceServiceClient(this._t);
+  Request _req(String url, [Uint8List? body]) => Request(url: url, method: 'POST', body: body);
 
   Future<m.HealthResponse> health(m.HealthRequest req) async {
     final res = await _t.send(_req('/v1/health', req.writeToBuffer()));
@@ -30,6 +29,34 @@ class ConformanceServiceClient {
     final res = await _t.send(_req('/v1/fail', req.writeToBuffer()));
     if (res.error != null) throw res.error!;
     return m.FailResponse.fromBuffer(res.body!);
+  }
+
+  Stream<m.StreamFailResponse> streamFail(m.StreamFailRequest req) async* {
+    final st = await _t.openStream(_req('/v1/stream-fail', req.writeToBuffer()));
+    await for (final chunk in st.messages) { yield m.StreamFailResponse.fromBuffer(chunk); }
+  }
+
+  Future<m.EchoMetaResponse> echoMeta(m.EchoMetaRequest req) async {
+    final res = await _t.send(_req('/v1/echo-meta', req.writeToBuffer()));
+    if (res.error != null) throw res.error!;
+    return m.EchoMetaResponse.fromBuffer(res.body!);
+  }
+
+  Future<m.BigResponse> big(m.BigRequest req) async {
+    final res = await _t.send(_req('/v1/big', req.writeToBuffer()));
+    if (res.error != null) throw res.error!;
+    return m.BigResponse.fromBuffer(res.body!);
+  }
+
+  Future<m.FailDetailsResponse> failDetails(m.FailDetailsRequest req) async {
+    final res = await _t.send(_req('/v1/fail-details', req.writeToBuffer()));
+    if (res.error != null) throw res.error!;
+    return m.FailDetailsResponse.fromBuffer(res.body!);
+  }
+
+  Stream<m.StreamFailDetailsResponse> streamFailDetails(m.StreamFailDetailsRequest req) async* {
+    final st = await _t.openStream(_req('/v1/stream-fail-details', req.writeToBuffer()));
+    await for (final chunk in st.messages) { yield m.StreamFailDetailsResponse.fromBuffer(chunk); }
   }
 
 }

@@ -29,6 +29,16 @@ abstract class ConformanceServiceBase extends $pb.GeneratedService {
       $pb.ServerContext ctx, $0.CountRequest request);
   $async.Future<$0.FailResponse> fail(
       $pb.ServerContext ctx, $0.FailRequest request);
+  $async.Future<$0.StreamFailResponse> streamFail(
+      $pb.ServerContext ctx, $0.StreamFailRequest request);
+  $async.Future<$0.EchoMetaResponse> echoMeta(
+      $pb.ServerContext ctx, $0.EchoMetaRequest request);
+  $async.Future<$0.BigResponse> big(
+      $pb.ServerContext ctx, $0.BigRequest request);
+  $async.Future<$0.FailDetailsResponse> failDetails(
+      $pb.ServerContext ctx, $0.FailDetailsRequest request);
+  $async.Future<$0.StreamFailDetailsResponse> streamFailDetails(
+      $pb.ServerContext ctx, $0.StreamFailDetailsRequest request);
 
   $pb.GeneratedMessage createRequest($core.String methodName) {
     switch (methodName) {
@@ -40,6 +50,16 @@ abstract class ConformanceServiceBase extends $pb.GeneratedService {
         return $0.CountRequest();
       case 'Fail':
         return $0.FailRequest();
+      case 'StreamFail':
+        return $0.StreamFailRequest();
+      case 'EchoMeta':
+        return $0.EchoMetaRequest();
+      case 'Big':
+        return $0.BigRequest();
+      case 'FailDetails':
+        return $0.FailDetailsRequest();
+      case 'StreamFailDetails':
+        return $0.StreamFailDetailsRequest();
       default:
         throw $core.ArgumentError('Unknown method: $methodName');
     }
@@ -56,6 +76,16 @@ abstract class ConformanceServiceBase extends $pb.GeneratedService {
         return count(ctx, request as $0.CountRequest);
       case 'Fail':
         return fail(ctx, request as $0.FailRequest);
+      case 'StreamFail':
+        return streamFail(ctx, request as $0.StreamFailRequest);
+      case 'EchoMeta':
+        return echoMeta(ctx, request as $0.EchoMetaRequest);
+      case 'Big':
+        return big(ctx, request as $0.BigRequest);
+      case 'FailDetails':
+        return failDetails(ctx, request as $0.FailDetailsRequest);
+      case 'StreamFailDetails':
+        return streamFailDetails(ctx, request as $0.StreamFailDetailsRequest);
       default:
         throw $core.ArgumentError('Unknown method: $methodName');
     }

@@ -109,6 +109,164 @@ const HealthResponse$json = {
 final $typed_data.Uint8List healthResponseDescriptor = $convert.base64Decode(
     'Cg5IZWFsdGhSZXNwb25zZRIOCgJvaxgBIAEoCFICb2sSEgoEbmFtZRgCIAEoCVIEbmFtZQ==');
 
+@$core.Deprecated('Use streamFailRequestDescriptor instead')
+const StreamFailRequest$json = {
+  '1': 'StreamFailRequest',
+  '2': [
+    {'1': 'emit_before', '3': 1, '4': 1, '5': 5, '10': 'emitBefore'},
+    {'1': 'code', '3': 2, '4': 1, '5': 5, '10': 'code'},
+    {'1': 'message', '3': 3, '4': 1, '5': 9, '10': 'message'},
+  ],
+};
+
+/// Descriptor for `StreamFailRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List streamFailRequestDescriptor = $convert.base64Decode(
+    'ChFTdHJlYW1GYWlsUmVxdWVzdBIfCgtlbWl0X2JlZm9yZRgBIAEoBVIKZW1pdEJlZm9yZRISCg'
+    'Rjb2RlGAIgASgFUgRjb2RlEhgKB21lc3NhZ2UYAyABKAlSB21lc3NhZ2U=');
+
+@$core.Deprecated('Use streamFailResponseDescriptor instead')
+const StreamFailResponse$json = {
+  '1': 'StreamFailResponse',
+  '2': [
+    {'1': 'index', '3': 1, '4': 1, '5': 5, '10': 'index'},
+  ],
+};
+
+/// Descriptor for `StreamFailResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List streamFailResponseDescriptor = $convert
+    .base64Decode('ChJTdHJlYW1GYWlsUmVzcG9uc2USFAoFaW5kZXgYASABKAVSBWluZGV4');
+
+@$core.Deprecated('Use echoMetaRequestDescriptor instead')
+const EchoMetaRequest$json = {
+  '1': 'EchoMetaRequest',
+  '2': [
+    {'1': 'input', '3': 1, '4': 1, '5': 9, '10': 'input'},
+  ],
+};
+
+/// Descriptor for `EchoMetaRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List echoMetaRequestDescriptor = $convert
+    .base64Decode('Cg9FY2hvTWV0YVJlcXVlc3QSFAoFaW5wdXQYASABKAlSBWlucHV0');
+
+@$core.Deprecated('Use echoMetaResponseDescriptor instead')
+const EchoMetaResponse$json = {
+  '1': 'EchoMetaResponse',
+  '2': [
+    {'1': 'input', '3': 1, '4': 1, '5': 9, '10': 'input'},
+    {
+      '1': 'meta',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.easyrpc.conformance.v1.EchoMetaResponse.MetaEntry',
+      '10': 'meta'
+    },
+  ],
+  '3': [EchoMetaResponse_MetaEntry$json],
+};
+
+@$core.Deprecated('Use echoMetaResponseDescriptor instead')
+const EchoMetaResponse_MetaEntry$json = {
+  '1': 'MetaEntry',
+  '2': [
+    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
+  ],
+  '7': {'7': true},
+};
+
+/// Descriptor for `EchoMetaResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List echoMetaResponseDescriptor = $convert.base64Decode(
+    'ChBFY2hvTWV0YVJlc3BvbnNlEhQKBWlucHV0GAEgASgJUgVpbnB1dBJGCgRtZXRhGAIgAygLMj'
+    'IuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5FY2hvTWV0YVJlc3BvbnNlLk1ldGFFbnRyeVIEbWV0'
+    'YRo3CglNZXRhRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOg'
+    'I4AQ==');
+
+@$core.Deprecated('Use bigRequestDescriptor instead')
+const BigRequest$json = {
+  '1': 'BigRequest',
+  '2': [
+    {'1': 'size', '3': 1, '4': 1, '5': 5, '10': 'size'},
+  ],
+};
+
+/// Descriptor for `BigRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List bigRequestDescriptor =
+    $convert.base64Decode('CgpCaWdSZXF1ZXN0EhIKBHNpemUYASABKAVSBHNpemU=');
+
+@$core.Deprecated('Use bigResponseDescriptor instead')
+const BigResponse$json = {
+  '1': 'BigResponse',
+  '2': [
+    {'1': 'size', '3': 2, '4': 1, '5': 5, '10': 'size'},
+  ],
+};
+
+/// Descriptor for `BigResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List bigResponseDescriptor =
+    $convert.base64Decode('CgtCaWdSZXNwb25zZRISCgRzaXplGAIgASgFUgRzaXpl');
+
+@$core.Deprecated('Use failDetailsRequestDescriptor instead')
+const FailDetailsRequest$json = {
+  '1': 'FailDetailsRequest',
+  '2': [
+    {'1': 'code', '3': 1, '4': 1, '5': 5, '10': 'code'},
+    {'1': 'message', '3': 2, '4': 1, '5': 9, '10': 'message'},
+    {'1': 'detail_type', '3': 3, '4': 1, '5': 9, '10': 'detailType'},
+    {'1': 'detail_text', '3': 4, '4': 1, '5': 9, '10': 'detailText'},
+  ],
+};
+
+/// Descriptor for `FailDetailsRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List failDetailsRequestDescriptor = $convert.base64Decode(
+    'ChJGYWlsRGV0YWlsc1JlcXVlc3QSEgoEY29kZRgBIAEoBVIEY29kZRIYCgdtZXNzYWdlGAIgAS'
+    'gJUgdtZXNzYWdlEh8KC2RldGFpbF90eXBlGAMgASgJUgpkZXRhaWxUeXBlEh8KC2RldGFpbF90'
+    'ZXh0GAQgASgJUgpkZXRhaWxUZXh0');
+
+@$core.Deprecated('Use failDetailsResponseDescriptor instead')
+const FailDetailsResponse$json = {
+  '1': 'FailDetailsResponse',
+  '2': [
+    {'1': 'ok', '3': 1, '4': 1, '5': 8, '10': 'ok'},
+  ],
+};
+
+/// Descriptor for `FailDetailsResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List failDetailsResponseDescriptor = $convert
+    .base64Decode('ChNGYWlsRGV0YWlsc1Jlc3BvbnNlEg4KAm9rGAEgASgIUgJvaw==');
+
+@$core.Deprecated('Use streamFailDetailsRequestDescriptor instead')
+const StreamFailDetailsRequest$json = {
+  '1': 'StreamFailDetailsRequest',
+  '2': [
+    {'1': 'emit_before', '3': 1, '4': 1, '5': 5, '10': 'emitBefore'},
+    {'1': 'code', '3': 2, '4': 1, '5': 5, '10': 'code'},
+    {'1': 'message', '3': 3, '4': 1, '5': 9, '10': 'message'},
+    {'1': 'detail_type', '3': 4, '4': 1, '5': 9, '10': 'detailType'},
+    {'1': 'detail_text', '3': 5, '4': 1, '5': 9, '10': 'detailText'},
+  ],
+};
+
+/// Descriptor for `StreamFailDetailsRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List streamFailDetailsRequestDescriptor = $convert.base64Decode(
+    'ChhTdHJlYW1GYWlsRGV0YWlsc1JlcXVlc3QSHwoLZW1pdF9iZWZvcmUYASABKAVSCmVtaXRCZW'
+    'ZvcmUSEgoEY29kZRgCIAEoBVIEY29kZRIYCgdtZXNzYWdlGAMgASgJUgdtZXNzYWdlEh8KC2Rl'
+    'dGFpbF90eXBlGAQgASgJUgpkZXRhaWxUeXBlEh8KC2RldGFpbF90ZXh0GAUgASgJUgpkZXRhaW'
+    'xUZXh0');
+
+@$core.Deprecated('Use streamFailDetailsResponseDescriptor instead')
+const StreamFailDetailsResponse$json = {
+  '1': 'StreamFailDetailsResponse',
+  '2': [
+    {'1': 'index', '3': 1, '4': 1, '5': 5, '10': 'index'},
+  ],
+};
+
+/// Descriptor for `StreamFailDetailsResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List streamFailDetailsResponseDescriptor =
+    $convert.base64Decode(
+        'ChlTdHJlYW1GYWlsRGV0YWlsc1Jlc3BvbnNlEhQKBWluZGV4GAEgASgFUgVpbmRleA==');
+
 const $core.Map<$core.String, $core.dynamic> ConformanceServiceBase$json = {
   '1': 'ConformanceService',
   '2': [
@@ -137,6 +295,38 @@ const $core.Map<$core.String, $core.dynamic> ConformanceServiceBase$json = {
       '3': '.easyrpc.conformance.v1.FailResponse',
       '4': {}
     },
+    {
+      '1': 'StreamFail',
+      '2': '.easyrpc.conformance.v1.StreamFailRequest',
+      '3': '.easyrpc.conformance.v1.StreamFailResponse',
+      '4': {},
+      '6': true
+    },
+    {
+      '1': 'EchoMeta',
+      '2': '.easyrpc.conformance.v1.EchoMetaRequest',
+      '3': '.easyrpc.conformance.v1.EchoMetaResponse',
+      '4': {}
+    },
+    {
+      '1': 'Big',
+      '2': '.easyrpc.conformance.v1.BigRequest',
+      '3': '.easyrpc.conformance.v1.BigResponse',
+      '4': {}
+    },
+    {
+      '1': 'FailDetails',
+      '2': '.easyrpc.conformance.v1.FailDetailsRequest',
+      '3': '.easyrpc.conformance.v1.FailDetailsResponse',
+      '4': {}
+    },
+    {
+      '1': 'StreamFailDetails',
+      '2': '.easyrpc.conformance.v1.StreamFailDetailsRequest',
+      '3': '.easyrpc.conformance.v1.StreamFailDetailsResponse',
+      '4': {},
+      '6': true
+    },
   ],
 };
 
@@ -151,6 +341,20 @@ const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
   '.easyrpc.conformance.v1.CountResponse': CountResponse$json,
   '.easyrpc.conformance.v1.FailRequest': FailRequest$json,
   '.easyrpc.conformance.v1.FailResponse': FailResponse$json,
+  '.easyrpc.conformance.v1.StreamFailRequest': StreamFailRequest$json,
+  '.easyrpc.conformance.v1.StreamFailResponse': StreamFailResponse$json,
+  '.easyrpc.conformance.v1.EchoMetaRequest': EchoMetaRequest$json,
+  '.easyrpc.conformance.v1.EchoMetaResponse': EchoMetaResponse$json,
+  '.easyrpc.conformance.v1.EchoMetaResponse.MetaEntry':
+      EchoMetaResponse_MetaEntry$json,
+  '.easyrpc.conformance.v1.BigRequest': BigRequest$json,
+  '.easyrpc.conformance.v1.BigResponse': BigResponse$json,
+  '.easyrpc.conformance.v1.FailDetailsRequest': FailDetailsRequest$json,
+  '.easyrpc.conformance.v1.FailDetailsResponse': FailDetailsResponse$json,
+  '.easyrpc.conformance.v1.StreamFailDetailsRequest':
+      StreamFailDetailsRequest$json,
+  '.easyrpc.conformance.v1.StreamFailDetailsResponse':
+      StreamFailDetailsResponse$json,
 };
 
 /// Descriptor for `ConformanceService`. Decode as a `google.protobuf.ServiceDescriptorProto`.
@@ -158,9 +362,20 @@ final $typed_data.Uint8List conformanceServiceDescriptor = $convert.base64Decode
     'ChJDb25mb3JtYW5jZVNlcnZpY2USawoGSGVhbHRoEiUuZWFzeXJwYy5jb25mb3JtYW5jZS52MS'
     '5IZWFsdGhSZXF1ZXN0GiYuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5IZWFsdGhSZXNwb25zZSIS'
     'gtPkkwIMEgovdjEvaGVhbHRoEmYKBEVjaG8SIy5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLkVjaG'
-    '9SZXF1ZXN0GiQuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5FY2hvUmVzcG9uc2UiE4LT5JMCDToB'
-    'KiIIL3YxL2VjaG8SbAoFQ291bnQSJC5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLkNvdW50UmVxdW'
-    'VzdBolLmVhc3lycGMuY29uZm9ybWFuY2UudjEuQ291bnRSZXNwb25zZSIUgtPkkwIOOgEqIgkv'
-    'djEvY291bnQwARJmCgRGYWlsEiMuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5GYWlsUmVxdWVzdB'
-    'okLmVhc3lycGMuY29uZm9ybWFuY2UudjEuRmFpbFJlc3BvbnNlIhOC0+STAg06ASoiCC92MS9m'
-    'YWls');
+    '9SZXF1ZXN0GiQuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5FY2hvUmVzcG9uc2UiE4LT5JMCDSII'
+    'L3YxL2VjaG86ASoSbAoFQ291bnQSJC5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLkNvdW50UmVxdW'
+    'VzdBolLmVhc3lycGMuY29uZm9ybWFuY2UudjEuQ291bnRSZXNwb25zZSIUgtPkkwIOIgkvdjEv'
+    'Y291bnQ6ASowARJmCgRGYWlsEiMuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5GYWlsUmVxdWVzdB'
+    'okLmVhc3lycGMuY29uZm9ybWFuY2UudjEuRmFpbFJlc3BvbnNlIhOC0+STAg0iCC92MS9mYWls'
+    'OgEqEoEBCgpTdHJlYW1GYWlsEikuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5TdHJlYW1GYWlsUm'
+    'VxdWVzdBoqLmVhc3lycGMuY29uZm9ybWFuY2UudjEuU3RyZWFtRmFpbFJlc3BvbnNlIhqC0+ST'
+    'AhQiDy92MS9zdHJlYW0tZmFpbDoBKjABEncKCEVjaG9NZXRhEicuZWFzeXJwYy5jb25mb3JtYW'
+    '5jZS52MS5FY2hvTWV0YVJlcXVlc3QaKC5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLkVjaG9NZXRh'
+    'UmVzcG9uc2UiGILT5JMCEiINL3YxL2VjaG8tbWV0YToBKhJiCgNCaWcSIi5lYXN5cnBjLmNvbm'
+    'Zvcm1hbmNlLnYxLkJpZ1JlcXVlc3QaIy5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLkJpZ1Jlc3Bv'
+    'bnNlIhKC0+STAgwiBy92MS9iaWc6ASoSgwEKC0ZhaWxEZXRhaWxzEiouZWFzeXJwYy5jb25mb3'
+    'JtYW5jZS52MS5GYWlsRGV0YWlsc1JlcXVlc3QaKy5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLkZh'
+    'aWxEZXRhaWxzUmVzcG9uc2UiG4LT5JMCFSIQL3YxL2ZhaWwtZGV0YWlsczoBKhKeAQoRU3RyZW'
+    'FtRmFpbERldGFpbHMSMC5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLlN0cmVhbUZhaWxEZXRhaWxz'
+    'UmVxdWVzdBoxLmVhc3lycGMuY29uZm9ybWFuY2UudjEuU3RyZWFtRmFpbERldGFpbHNSZXNwb2'
+    '5zZSIigtPkkwIcIhcvdjEvc3RyZWFtLWZhaWwtZGV0YWlsczoBKjAB');

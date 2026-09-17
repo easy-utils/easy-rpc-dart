@@ -21,14 +21,11 @@ class Http2Transport implements Transport {
     final connection = _Response1();
     final stream = await _roundTrip(req, connection);
     final hdrs = _mapHeaders(connection.headers);
-    RPCError? err;
-    if (connection.status >= 300) {
-      final code = hdrs['connect-code']?.first;
-      final c = code == null ? null : int.tryParse(code);
-      err = c != null
-          ? RPCError(c, hdrs['connect-error']?.first ?? '')
-          : RPCError(connectFromStatus(connection.status), utf8.decode(stream));
-    }
+    // Shared fallback chain: connect-code header (merging details from the
+    // JSON body) -> Connect JSON body -> lossy status mapping.
+    final err = connection.status >= 300
+        ? rpcResponseError(connection.status, hdrs, stream)
+        : null;
     return Response(
       status: connection.status,
       headers: hdrs,

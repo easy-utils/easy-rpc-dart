@@ -251,9 +251,15 @@ List<int> gzipCompress(List<int> data) {
   try { return io.GZipCodec().encode(data); } catch (_) { return data; }
 }
 
-/// gzip-decompress bytes (identity on failure).
+/// gzip-decompress bytes. THROWS RPCError(13) on corrupt input (fault matrix
+/// M10): a flagged-but-corrupt gzip payload is a protocol error, never raw
+/// compressed bytes.
 List<int> gzipDecompress(List<int> data) {
-  try { return io.GZipCodec().decode(data); } catch (_) { return data; }
+  try {
+    return io.GZipCodec().decode(data);
+  } catch (e) {
+    throw RPCError(13, 'corrupt gzip frame: $e');
+  }
 }
 const String kConnectProtocolVersion = '1';
 const int kDefaultMaxMessageBytes = 4 * 1024 * 1024;
@@ -279,6 +285,7 @@ Request withTimeout(Request req, int timeoutMs) {
 class FrameReader {
   Uint8List _acc = Uint8List(0);
   Stream<Uint8List> frames(Stream<List<int>> chunks) async* {
+    var sawEnd = false;
     await for (final c in chunks) {
       _acc = Uint8List.fromList([..._acc, ...c]);
       while (true) {
@@ -295,12 +302,22 @@ class FrameReader {
           payload = Uint8List.fromList(gzipDecompress(payload));
         }
         if ((flags & kEndStream) != 0) {
+          sawEnd = true;
           final (code, message, details) = decodeEndStream(payload);
           if (code != 0) throw RPCError(code, message, details);
           return;
         }
         yield payload;
       }
+    }
+    // Fault matrix F2/M8: the Connect protocol requires every server-stream
+    // to terminate with an END frame; a body that ends without one (or with
+    // trailing partial bytes) was truncated mid-stream.
+    if (_acc.isNotEmpty) {
+      throw RPCError(13, 'truncated frame at end of stream');
+    }
+    if (!sawEnd) {
+      throw RPCError(13, 'stream ended without END frame');
     }
   }
 }
