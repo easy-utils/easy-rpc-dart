@@ -117,9 +117,26 @@ int connectFromStatus(int status) => switch (status) {
       _ => 13,
     };
 
+/// Encode as UNPADDED standard base64 — matches Connect
+/// (base64.RawStdEncoding).
+String _b64Encode(List<int> data) => base64.encode(data).replaceAll('=', '');
+
+/// Decode standard OR URL-safe base64, padded OR unpadded (Connect sends
+/// unpadded). Throws on invalid input.
+Uint8List _b64Decode(String s) {
+  var t = s.replaceAll('-', '+').replaceAll('_', '/');
+  if (t.length % 4 == 1) {
+    throw const FormatException('invalid base64 length');
+  }
+  while (t.length % 4 != 0) {
+    t += '=';
+  }
+  return Uint8List.fromList(base64.decode(t));
+}
+
 List<Map<String, String>> _wireDetails(List<ErrorDetail>? details) =>
     (details ?? const [])
-        .map((d) => {'type': d.type, 'value': base64.encode(d.value)})
+        .map((d) => {'type': d.type, 'value': _b64Encode(d.value)})
         .toList();
 
 /// Parse the wire details array; malformed entries are skipped, never fatal
@@ -133,7 +150,7 @@ List<ErrorDetail>? _parseWireDetails(Object? v) {
     final val = el['value'];
     if (t is! String || t.isEmpty || val is! String || val.isEmpty) continue;
     try {
-      out.add(ErrorDetail(t, base64.decode(val)));
+      out.add(ErrorDetail(t, _b64Decode(val)));
     } catch (_) {
       // invalid base64: skip the entry
     }
