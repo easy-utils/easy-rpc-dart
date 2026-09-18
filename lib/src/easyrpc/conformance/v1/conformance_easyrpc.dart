@@ -83,4 +83,31 @@ class ConformanceServiceClient {
     await for (final chunk in st.messages) { yield m.CountTrailerResponse.fromBuffer(chunk); }
   }
 
+  Future<m.EchoBytesResponse> echoBytes(m.EchoBytesRequest req) async {
+    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/EchoBytes', req.writeToBuffer()));
+    if (res.error != null) throw res.error!;
+    lastTrailers = res.trailers;
+    return m.EchoBytesResponse.fromBuffer(res.body!);
+  }
+
+  Future<m.SleepResponse> sleep(m.SleepRequest req) async {
+    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/Sleep', req.writeToBuffer()));
+    if (res.error != null) throw res.error!;
+    lastTrailers = res.trailers;
+    return m.SleepResponse.fromBuffer(res.body!);
+  }
+
+  Future<m.EmptyResponse> empty(m.EmptyRequest req) async {
+    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/Empty', req.writeToBuffer()));
+    if (res.error != null) throw res.error!;
+    lastTrailers = res.trailers;
+    return m.EmptyResponse.fromBuffer(res.body!);
+  }
+
+  Stream<m.BigStreamResponse> bigStream(m.BigStreamRequest req) async* {
+    final st = await _t.openStream(_req('/easyrpc.conformance.v1.ConformanceService/BigStream', Uint8List.fromList(frame(req.writeToBuffer()))));
+    lastStream = st;
+    await for (final chunk in st.messages) { yield m.BigStreamResponse.fromBuffer(chunk); }
+  }
+
 }

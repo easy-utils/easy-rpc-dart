@@ -477,6 +477,464 @@ class HealthResponse extends $pb.GeneratedMessage {
   void clearName() => $_clearField(2);
 }
 
+class EchoBytesRequest extends $pb.GeneratedMessage {
+  factory EchoBytesRequest({
+    $core.List<$core.int>? data,
+  }) {
+    final result = EchoBytesRequest._();
+    if (data != null) result.data = data;
+    return result;
+  }
+
+  EchoBytesRequest._();
+
+  factory EchoBytesRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EchoBytesRequest()..mergeFromBuffer(data, registry);
+  factory EchoBytesRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EchoBytesRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EchoBytesRequest',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: EchoBytesRequest.$_createMessage)
+    ..a<$core.List<$core.int>>(
+        1, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EchoBytesRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EchoBytesRequest copyWith(void Function(EchoBytesRequest) updates) =>
+      super.copyWith((message) => updates(message as EchoBytesRequest))
+          as EchoBytesRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EchoBytesRequest() / EchoBytesRequest.new instead')
+  static EchoBytesRequest create() => EchoBytesRequest._();
+  static $pb.GeneratedMessage $_createMessage() => EchoBytesRequest._();
+  @$core.override
+  EchoBytesRequest createEmptyInstance() => EchoBytesRequest._();
+  @$core.pragma('dart2js:noInline')
+  static EchoBytesRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EchoBytesRequest>(
+          EchoBytesRequest.$_createMessage);
+  static EchoBytesRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get data => $_getN(0);
+  @$pb.TagNumber(1)
+  set data($core.List<$core.int> value) => $_setBytes(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasData() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearData() => $_clearField(1);
+}
+
+class EchoBytesResponse extends $pb.GeneratedMessage {
+  factory EchoBytesResponse({
+    $core.List<$core.int>? data,
+  }) {
+    final result = EchoBytesResponse._();
+    if (data != null) result.data = data;
+    return result;
+  }
+
+  EchoBytesResponse._();
+
+  factory EchoBytesResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EchoBytesResponse()..mergeFromBuffer(data, registry);
+  factory EchoBytesResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EchoBytesResponse()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EchoBytesResponse',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: EchoBytesResponse.$_createMessage)
+    ..a<$core.List<$core.int>>(
+        1, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EchoBytesResponse clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EchoBytesResponse copyWith(void Function(EchoBytesResponse) updates) =>
+      super.copyWith((message) => updates(message as EchoBytesResponse))
+          as EchoBytesResponse;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EchoBytesResponse() / EchoBytesResponse.new instead')
+  static EchoBytesResponse create() => EchoBytesResponse._();
+  static $pb.GeneratedMessage $_createMessage() => EchoBytesResponse._();
+  @$core.override
+  EchoBytesResponse createEmptyInstance() => EchoBytesResponse._();
+  @$core.pragma('dart2js:noInline')
+  static EchoBytesResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EchoBytesResponse>(
+          EchoBytesResponse.$_createMessage);
+  static EchoBytesResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get data => $_getN(0);
+  @$pb.TagNumber(1)
+  set data($core.List<$core.int> value) => $_setBytes(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasData() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearData() => $_clearField(1);
+}
+
+class SleepRequest extends $pb.GeneratedMessage {
+  factory SleepRequest({
+    $core.int? millis,
+  }) {
+    final result = SleepRequest._();
+    if (millis != null) result.millis = millis;
+    return result;
+  }
+
+  SleepRequest._();
+
+  factory SleepRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SleepRequest()..mergeFromBuffer(data, registry);
+  factory SleepRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SleepRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SleepRequest',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: SleepRequest.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'millis')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SleepRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SleepRequest copyWith(void Function(SleepRequest) updates) =>
+      super.copyWith((message) => updates(message as SleepRequest))
+          as SleepRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use SleepRequest() / SleepRequest.new instead')
+  static SleepRequest create() => SleepRequest._();
+  static $pb.GeneratedMessage $_createMessage() => SleepRequest._();
+  @$core.override
+  SleepRequest createEmptyInstance() => SleepRequest._();
+  @$core.pragma('dart2js:noInline')
+  static SleepRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SleepRequest>(
+          SleepRequest.$_createMessage);
+  static SleepRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get millis => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set millis($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasMillis() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMillis() => $_clearField(1);
+}
+
+class SleepResponse extends $pb.GeneratedMessage {
+  factory SleepResponse({
+    $core.bool? ok,
+  }) {
+    final result = SleepResponse._();
+    if (ok != null) result.ok = ok;
+    return result;
+  }
+
+  SleepResponse._();
+
+  factory SleepResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SleepResponse()..mergeFromBuffer(data, registry);
+  factory SleepResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SleepResponse()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SleepResponse',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: SleepResponse.$_createMessage)
+    ..aOB(1, _omitFieldNames ? '' : 'ok')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SleepResponse clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SleepResponse copyWith(void Function(SleepResponse) updates) =>
+      super.copyWith((message) => updates(message as SleepResponse))
+          as SleepResponse;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use SleepResponse() / SleepResponse.new instead')
+  static SleepResponse create() => SleepResponse._();
+  static $pb.GeneratedMessage $_createMessage() => SleepResponse._();
+  @$core.override
+  SleepResponse createEmptyInstance() => SleepResponse._();
+  @$core.pragma('dart2js:noInline')
+  static SleepResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SleepResponse>(
+          SleepResponse.$_createMessage);
+  static SleepResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get ok => $_getBF(0);
+  @$pb.TagNumber(1)
+  set ok($core.bool value) => $_setBool(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasOk() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearOk() => $_clearField(1);
+}
+
+class EmptyRequest extends $pb.GeneratedMessage {
+  factory EmptyRequest() => EmptyRequest._();
+
+  EmptyRequest._();
+
+  factory EmptyRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EmptyRequest()..mergeFromBuffer(data, registry);
+  factory EmptyRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EmptyRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EmptyRequest',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: EmptyRequest.$_createMessage)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EmptyRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EmptyRequest copyWith(void Function(EmptyRequest) updates) =>
+      super.copyWith((message) => updates(message as EmptyRequest))
+          as EmptyRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EmptyRequest() / EmptyRequest.new instead')
+  static EmptyRequest create() => EmptyRequest._();
+  static $pb.GeneratedMessage $_createMessage() => EmptyRequest._();
+  @$core.override
+  EmptyRequest createEmptyInstance() => EmptyRequest._();
+  @$core.pragma('dart2js:noInline')
+  static EmptyRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EmptyRequest>(
+          EmptyRequest.$_createMessage);
+  static EmptyRequest? _defaultInstance;
+}
+
+class EmptyResponse extends $pb.GeneratedMessage {
+  factory EmptyResponse() => EmptyResponse._();
+
+  EmptyResponse._();
+
+  factory EmptyResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EmptyResponse()..mergeFromBuffer(data, registry);
+  factory EmptyResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EmptyResponse()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EmptyResponse',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: EmptyResponse.$_createMessage)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EmptyResponse clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EmptyResponse copyWith(void Function(EmptyResponse) updates) =>
+      super.copyWith((message) => updates(message as EmptyResponse))
+          as EmptyResponse;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EmptyResponse() / EmptyResponse.new instead')
+  static EmptyResponse create() => EmptyResponse._();
+  static $pb.GeneratedMessage $_createMessage() => EmptyResponse._();
+  @$core.override
+  EmptyResponse createEmptyInstance() => EmptyResponse._();
+  @$core.pragma('dart2js:noInline')
+  static EmptyResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EmptyResponse>(
+          EmptyResponse.$_createMessage);
+  static EmptyResponse? _defaultInstance;
+}
+
+class BigStreamRequest extends $pb.GeneratedMessage {
+  factory BigStreamRequest({
+    $core.int? count,
+    $core.int? size,
+  }) {
+    final result = BigStreamRequest._();
+    if (count != null) result.count = count;
+    if (size != null) result.size = size;
+    return result;
+  }
+
+  BigStreamRequest._();
+
+  factory BigStreamRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BigStreamRequest()..mergeFromBuffer(data, registry);
+  factory BigStreamRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BigStreamRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'BigStreamRequest',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: BigStreamRequest.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'count')
+    ..aI(2, _omitFieldNames ? '' : 'size')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BigStreamRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BigStreamRequest copyWith(void Function(BigStreamRequest) updates) =>
+      super.copyWith((message) => updates(message as BigStreamRequest))
+          as BigStreamRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use BigStreamRequest() / BigStreamRequest.new instead')
+  static BigStreamRequest create() => BigStreamRequest._();
+  static $pb.GeneratedMessage $_createMessage() => BigStreamRequest._();
+  @$core.override
+  BigStreamRequest createEmptyInstance() => BigStreamRequest._();
+  @$core.pragma('dart2js:noInline')
+  static BigStreamRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BigStreamRequest>(
+          BigStreamRequest.$_createMessage);
+  static BigStreamRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get count => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set count($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasCount() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCount() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get size => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set size($core.int value) => $_setSignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasSize() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSize() => $_clearField(2);
+}
+
+class BigStreamResponse extends $pb.GeneratedMessage {
+  factory BigStreamResponse({
+    $core.int? index,
+    $core.int? size,
+  }) {
+    final result = BigStreamResponse._();
+    if (index != null) result.index = index;
+    if (size != null) result.size = size;
+    return result;
+  }
+
+  BigStreamResponse._();
+
+  factory BigStreamResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BigStreamResponse()..mergeFromBuffer(data, registry);
+  factory BigStreamResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BigStreamResponse()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'BigStreamResponse',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: BigStreamResponse.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'index')
+    ..aI(2, _omitFieldNames ? '' : 'size')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BigStreamResponse clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BigStreamResponse copyWith(void Function(BigStreamResponse) updates) =>
+      super.copyWith((message) => updates(message as BigStreamResponse))
+          as BigStreamResponse;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use BigStreamResponse() / BigStreamResponse.new instead')
+  static BigStreamResponse create() => BigStreamResponse._();
+  static $pb.GeneratedMessage $_createMessage() => BigStreamResponse._();
+  @$core.override
+  BigStreamResponse createEmptyInstance() => BigStreamResponse._();
+  @$core.pragma('dart2js:noInline')
+  static BigStreamResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BigStreamResponse>(
+          BigStreamResponse.$_createMessage);
+  static BigStreamResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get index => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set index($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasIndex() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIndex() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get size => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set size($core.int value) => $_setSignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasSize() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSize() => $_clearField(2);
+}
+
 class StreamFailRequest extends $pb.GeneratedMessage {
   factory StreamFailRequest({
     $core.int? emitBefore,
@@ -1479,6 +1937,30 @@ class ConformanceServiceApi {
           $pb.ClientContext? ctx, CountTrailerRequest request) =>
       _client.invoke<CountTrailerResponse>(ctx, 'ConformanceService',
           'CountTrailer', request, CountTrailerResponse());
+
+  /// Echo arbitrary bytes (non-UTF-8 round-trip).
+  $async.Future<EchoBytesResponse> echoBytes(
+          $pb.ClientContext? ctx, EchoBytesRequest request) =>
+      _client.invoke<EchoBytesResponse>(
+          ctx, 'ConformanceService', 'EchoBytes', request, EchoBytesResponse());
+
+  /// Sleep `millis`, then return. Exercises `connect-timeout-ms` (M12/M13).
+  $async.Future<SleepResponse> sleep(
+          $pb.ClientContext? ctx, SleepRequest request) =>
+      _client.invoke<SleepResponse>(
+          ctx, 'ConformanceService', 'Sleep', request, SleepResponse());
+
+  /// Empty message round-trip (no fields set).
+  $async.Future<EmptyResponse> empty(
+          $pb.ClientContext? ctx, EmptyRequest request) =>
+      _client.invoke<EmptyResponse>(
+          ctx, 'ConformanceService', 'Empty', request, EmptyResponse());
+
+  /// Emit `count` frames of `size` bytes each (gzip boundary + big stream).
+  $async.Future<BigStreamResponse> bigStream(
+          $pb.ClientContext? ctx, BigStreamRequest request) =>
+      _client.invoke<BigStreamResponse>(
+          ctx, 'ConformanceService', 'BigStream', request, BigStreamResponse());
 }
 
 const $core.bool _omitFieldNames =

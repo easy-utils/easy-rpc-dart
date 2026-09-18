@@ -39,6 +39,18 @@ abstract class ConformanceServiceBase extends $pb.GeneratedService {
       $pb.ServerContext ctx, $0.FailDetailsRequest request);
   $async.Future<$0.StreamFailDetailsResponse> streamFailDetails(
       $pb.ServerContext ctx, $0.StreamFailDetailsRequest request);
+  $async.Future<$0.EchoTrailerResponse> echoTrailer(
+      $pb.ServerContext ctx, $0.EchoTrailerRequest request);
+  $async.Future<$0.CountTrailerResponse> countTrailer(
+      $pb.ServerContext ctx, $0.CountTrailerRequest request);
+  $async.Future<$0.EchoBytesResponse> echoBytes(
+      $pb.ServerContext ctx, $0.EchoBytesRequest request);
+  $async.Future<$0.SleepResponse> sleep(
+      $pb.ServerContext ctx, $0.SleepRequest request);
+  $async.Future<$0.EmptyResponse> empty(
+      $pb.ServerContext ctx, $0.EmptyRequest request);
+  $async.Future<$0.BigStreamResponse> bigStream(
+      $pb.ServerContext ctx, $0.BigStreamRequest request);
 
   $pb.GeneratedMessage createRequest($core.String methodName) {
     switch (methodName) {
@@ -60,6 +72,18 @@ abstract class ConformanceServiceBase extends $pb.GeneratedService {
         return $0.FailDetailsRequest();
       case 'StreamFailDetails':
         return $0.StreamFailDetailsRequest();
+      case 'EchoTrailer':
+        return $0.EchoTrailerRequest();
+      case 'CountTrailer':
+        return $0.CountTrailerRequest();
+      case 'EchoBytes':
+        return $0.EchoBytesRequest();
+      case 'Sleep':
+        return $0.SleepRequest();
+      case 'Empty':
+        return $0.EmptyRequest();
+      case 'BigStream':
+        return $0.BigStreamRequest();
       default:
         throw $core.ArgumentError('Unknown method: $methodName');
     }
@@ -86,6 +110,18 @@ abstract class ConformanceServiceBase extends $pb.GeneratedService {
         return failDetails(ctx, request as $0.FailDetailsRequest);
       case 'StreamFailDetails':
         return streamFailDetails(ctx, request as $0.StreamFailDetailsRequest);
+      case 'EchoTrailer':
+        return echoTrailer(ctx, request as $0.EchoTrailerRequest);
+      case 'CountTrailer':
+        return countTrailer(ctx, request as $0.CountTrailerRequest);
+      case 'EchoBytes':
+        return echoBytes(ctx, request as $0.EchoBytesRequest);
+      case 'Sleep':
+        return sleep(ctx, request as $0.SleepRequest);
+      case 'Empty':
+        return empty(ctx, request as $0.EmptyRequest);
+      case 'BigStream':
+        return bigStream(ctx, request as $0.BigStreamRequest);
       default:
         throw $core.ArgumentError('Unknown method: $methodName');
     }

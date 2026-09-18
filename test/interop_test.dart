@@ -57,4 +57,47 @@ void main() {
     }
     expect(err?.code, 3);
   });
+
+  test('echoBytes round-trip (non-UTF-8)', () async {
+    final c = ConformanceServiceClient(_transport(base));
+    final data = [0, 1, 2, 0xff, 0xfe, 0x80];
+    final res = await c.echoBytes(pb.EchoBytesRequest(data: data));
+    expect(res.data, data);
+  });
+
+  test('empty round-trip', () async {
+    final c = ConformanceServiceClient(_transport(base));
+    final res = await c.empty(pb.EmptyRequest());
+    expect(res.writeToBuffer(), isEmpty);
+  });
+
+  test('failDetails carries structured details', () async {
+    final c = ConformanceServiceClient(_transport(base));
+    RPCError? err;
+    try {
+      await c.failDetails(pb.FailDetailsRequest(
+        code: 8, message: 'limited',
+        detailType: 'type.googleapis.com/google.rpc.RetryInfo', detailText: 'retry:5s',
+      ));
+    } on RPCError catch (e) {
+      err = e;
+    }
+    expect(err?.code, 8);
+    expect(err?.details?.first.value, 'retry:5s'.codeUnits);
+  });
+
+  test('bigStream many frames', () async {
+    final c = ConformanceServiceClient(_transport(base));
+    final idx = <int>[];
+    await for (final r in c.bigStream(pb.BigStreamRequest(count: 4, size: 2048))) {
+      idx.add(r.index);
+    }
+    expect(idx, [0, 1, 2, 3]);
+  });
+
+  test('sleep returns ok', () async {
+    final c = ConformanceServiceClient(_transport(base));
+    final res = await c.sleep(pb.SleepRequest(millis: 0));
+    expect(res.ok, isTrue);
+  });
 }

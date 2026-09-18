@@ -109,6 +109,100 @@ const HealthResponse$json = {
 final $typed_data.Uint8List healthResponseDescriptor = $convert.base64Decode(
     'Cg5IZWFsdGhSZXNwb25zZRIOCgJvaxgBIAEoCFICb2sSEgoEbmFtZRgCIAEoCVIEbmFtZQ==');
 
+@$core.Deprecated('Use echoBytesRequestDescriptor instead')
+const EchoBytesRequest$json = {
+  '1': 'EchoBytesRequest',
+  '2': [
+    {'1': 'data', '3': 1, '4': 1, '5': 12, '10': 'data'},
+  ],
+};
+
+/// Descriptor for `EchoBytesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List echoBytesRequestDescriptor = $convert
+    .base64Decode('ChBFY2hvQnl0ZXNSZXF1ZXN0EhIKBGRhdGEYASABKAxSBGRhdGE=');
+
+@$core.Deprecated('Use echoBytesResponseDescriptor instead')
+const EchoBytesResponse$json = {
+  '1': 'EchoBytesResponse',
+  '2': [
+    {'1': 'data', '3': 1, '4': 1, '5': 12, '10': 'data'},
+  ],
+};
+
+/// Descriptor for `EchoBytesResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List echoBytesResponseDescriptor = $convert
+    .base64Decode('ChFFY2hvQnl0ZXNSZXNwb25zZRISCgRkYXRhGAEgASgMUgRkYXRh');
+
+@$core.Deprecated('Use sleepRequestDescriptor instead')
+const SleepRequest$json = {
+  '1': 'SleepRequest',
+  '2': [
+    {'1': 'millis', '3': 1, '4': 1, '5': 5, '10': 'millis'},
+  ],
+};
+
+/// Descriptor for `SleepRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sleepRequestDescriptor = $convert
+    .base64Decode('CgxTbGVlcFJlcXVlc3QSFgoGbWlsbGlzGAEgASgFUgZtaWxsaXM=');
+
+@$core.Deprecated('Use sleepResponseDescriptor instead')
+const SleepResponse$json = {
+  '1': 'SleepResponse',
+  '2': [
+    {'1': 'ok', '3': 1, '4': 1, '5': 8, '10': 'ok'},
+  ],
+};
+
+/// Descriptor for `SleepResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sleepResponseDescriptor =
+    $convert.base64Decode('Cg1TbGVlcFJlc3BvbnNlEg4KAm9rGAEgASgIUgJvaw==');
+
+@$core.Deprecated('Use emptyRequestDescriptor instead')
+const EmptyRequest$json = {
+  '1': 'EmptyRequest',
+};
+
+/// Descriptor for `EmptyRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List emptyRequestDescriptor =
+    $convert.base64Decode('CgxFbXB0eVJlcXVlc3Q=');
+
+@$core.Deprecated('Use emptyResponseDescriptor instead')
+const EmptyResponse$json = {
+  '1': 'EmptyResponse',
+};
+
+/// Descriptor for `EmptyResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List emptyResponseDescriptor =
+    $convert.base64Decode('Cg1FbXB0eVJlc3BvbnNl');
+
+@$core.Deprecated('Use bigStreamRequestDescriptor instead')
+const BigStreamRequest$json = {
+  '1': 'BigStreamRequest',
+  '2': [
+    {'1': 'count', '3': 1, '4': 1, '5': 5, '10': 'count'},
+    {'1': 'size', '3': 2, '4': 1, '5': 5, '10': 'size'},
+  ],
+};
+
+/// Descriptor for `BigStreamRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List bigStreamRequestDescriptor = $convert.base64Decode(
+    'ChBCaWdTdHJlYW1SZXF1ZXN0EhQKBWNvdW50GAEgASgFUgVjb3VudBISCgRzaXplGAIgASgFUg'
+    'RzaXpl');
+
+@$core.Deprecated('Use bigStreamResponseDescriptor instead')
+const BigStreamResponse$json = {
+  '1': 'BigStreamResponse',
+  '2': [
+    {'1': 'index', '3': 1, '4': 1, '5': 5, '10': 'index'},
+    {'1': 'size', '3': 2, '4': 1, '5': 5, '10': 'size'},
+  ],
+};
+
+/// Descriptor for `BigStreamResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List bigStreamResponseDescriptor = $convert.base64Decode(
+    'ChFCaWdTdHJlYW1SZXNwb25zZRIUCgVpbmRleBgBIAEoBVIFaW5kZXgSEgoEc2l6ZRgCIAEoBV'
+    'IEc2l6ZQ==');
+
 @$core.Deprecated('Use streamFailRequestDescriptor instead')
 const StreamFailRequest$json = {
   '1': 'StreamFailRequest',
@@ -380,6 +474,27 @@ const $core.Map<$core.String, $core.dynamic> ConformanceServiceBase$json = {
       '3': '.easyrpc.conformance.v1.CountTrailerResponse',
       '6': true
     },
+    {
+      '1': 'EchoBytes',
+      '2': '.easyrpc.conformance.v1.EchoBytesRequest',
+      '3': '.easyrpc.conformance.v1.EchoBytesResponse'
+    },
+    {
+      '1': 'Sleep',
+      '2': '.easyrpc.conformance.v1.SleepRequest',
+      '3': '.easyrpc.conformance.v1.SleepResponse'
+    },
+    {
+      '1': 'Empty',
+      '2': '.easyrpc.conformance.v1.EmptyRequest',
+      '3': '.easyrpc.conformance.v1.EmptyResponse'
+    },
+    {
+      '1': 'BigStream',
+      '2': '.easyrpc.conformance.v1.BigStreamRequest',
+      '3': '.easyrpc.conformance.v1.BigStreamResponse',
+      '6': true
+    },
   ],
 };
 
@@ -412,6 +527,14 @@ const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
   '.easyrpc.conformance.v1.EchoTrailerResponse': EchoTrailerResponse$json,
   '.easyrpc.conformance.v1.CountTrailerRequest': CountTrailerRequest$json,
   '.easyrpc.conformance.v1.CountTrailerResponse': CountTrailerResponse$json,
+  '.easyrpc.conformance.v1.EchoBytesRequest': EchoBytesRequest$json,
+  '.easyrpc.conformance.v1.EchoBytesResponse': EchoBytesResponse$json,
+  '.easyrpc.conformance.v1.SleepRequest': SleepRequest$json,
+  '.easyrpc.conformance.v1.SleepResponse': SleepResponse$json,
+  '.easyrpc.conformance.v1.EmptyRequest': EmptyRequest$json,
+  '.easyrpc.conformance.v1.EmptyResponse': EmptyResponse$json,
+  '.easyrpc.conformance.v1.BigStreamRequest': BigStreamRequest$json,
+  '.easyrpc.conformance.v1.BigStreamResponse': BigStreamResponse$json,
 };
 
 /// Descriptor for `ConformanceService`. Decode as a `google.protobuf.ServiceDescriptorProto`.
@@ -435,4 +558,11 @@ final $typed_data.Uint8List conformanceServiceDescriptor = $convert.base64Decode
     'YXN5cnBjLmNvbmZvcm1hbmNlLnYxLkVjaG9UcmFpbGVyUmVxdWVzdBorLmVhc3lycGMuY29uZm'
     '9ybWFuY2UudjEuRWNob1RyYWlsZXJSZXNwb25zZRJrCgxDb3VudFRyYWlsZXISKy5lYXN5cnBj'
     'LmNvbmZvcm1hbmNlLnYxLkNvdW50VHJhaWxlclJlcXVlc3QaLC5lYXN5cnBjLmNvbmZvcm1hbm'
-    'NlLnYxLkNvdW50VHJhaWxlclJlc3BvbnNlMAE=');
+    'NlLnYxLkNvdW50VHJhaWxlclJlc3BvbnNlMAESYAoJRWNob0J5dGVzEiguZWFzeXJwYy5jb25m'
+    'b3JtYW5jZS52MS5FY2hvQnl0ZXNSZXF1ZXN0GikuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5FY2'
+    'hvQnl0ZXNSZXNwb25zZRJUCgVTbGVlcBIkLmVhc3lycGMuY29uZm9ybWFuY2UudjEuU2xlZXBS'
+    'ZXF1ZXN0GiUuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5TbGVlcFJlc3BvbnNlElQKBUVtcHR5Ei'
+    'QuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5FbXB0eVJlcXVlc3QaJS5lYXN5cnBjLmNvbmZvcm1h'
+    'bmNlLnYxLkVtcHR5UmVzcG9uc2USYgoJQmlnU3RyZWFtEiguZWFzeXJwYy5jb25mb3JtYW5jZS'
+    '52MS5CaWdTdHJlYW1SZXF1ZXN0GikuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5CaWdTdHJlYW1S'
+    'ZXNwb25zZTAB');
