@@ -16,40 +16,11 @@ def resolve(f):
     for svc in f.service:
         for m in svc.method:
             name = m.name or ''
-            path = rest_path(m) or f'/{pkg}.{svc.name}/{name}'
+            path = f'/{pkg}.{svc.name}/{name}'
             out.append((svc.name, name, path, m.server_streaming,
                         m.input_type.split('.')[-1], m.output_type.split('.')[-1]))
     return out
 
-
-def rest_path(m):
-    opts = m.options
-    if not opts:
-        return None
-    try:
-        raw = opts.SerializeToString()
-        pos = 0
-        while pos < len(raw):
-            tag, pos = readvar(raw, pos)
-            field = tag >> 3
-            wt = tag & 7
-            if wt == 2:
-                ln, pos = readvar(raw, pos)
-                val = raw[pos:pos + ln]
-                pos += ln
-                if field == 72295728:
-                    p = parse_rule(val)
-                    if p:
-                        return p
-            elif wt == 0:
-                _, pos = readvar(raw, pos)
-            elif wt == 5:
-                pos += 4
-            elif wt == 1:
-                pos += 8
-    except Exception:
-        return None
-    return None
 
 
 def readvar(b, i):
@@ -119,18 +90,22 @@ def main():
             L.append(f'class {client} {{')
             L.append('  final Transport _t;')
             L.append(f'  {client}(this._t);')
-            L.append('  Request _req(String url, [Uint8List? body]) => Request(url: url, method: \'POST\', body: body);')
+            L.append('  Request _req(String url, [Uint8List? body]) => Request(url: url, body: body);')
+            L.append('  Headers lastTrailers = const {};')
+            L.append('  RpcStream? lastStream;')
             L.append('')
             for (svc, name, path, ss, it, ot) in methods:
                 if ss:
                     L.append(f'  Stream<m.{ot}> {camel(name)}(m.{it} req) async* {{')
-                    L.append(f"    final st = await _t.openStream(_req('{path}', req.writeToBuffer()));")
+                    L.append(f"    final st = await _t.openStream(_req('{path}', Uint8List.fromList(frame(req.writeToBuffer()))));")
+                    L.append('    lastStream = st;')
                     L.append(f'    await for (final chunk in st.messages) {{ yield m.{ot}.fromBuffer(chunk); }}')
                     L.append('  }')
                 else:
                     L.append(f'  Future<m.{ot}> {camel(name)}(m.{it} req) async {{')
                     L.append(f"    final res = await _t.send(_req('{path}', req.writeToBuffer()));")
                     L.append('    if (res.error != null) throw res.error!;')
+                    L.append('    lastTrailers = res.trailers;')
                     L.append(f'    return m.{ot}.fromBuffer(res.body!);')
                     L.append('  }')
                 L.append('')

@@ -37,9 +37,23 @@ class Http2Transport implements Transport {
 
   @override
   Future<RpcStream> openStream(Request req) async {
-    final res = await send(req);
+    // The generated client already envelopes the request; only fix up the
+    // streaming content type here.
+    final framedReq = Request(
+      url: req.url,
+      headers: {
+        ...req.headers,
+        'content-type': const ['application/connect+proto'],
+      },
+      body: req.body,
+    );
+    final res = await send(framedReq);
     if (res.error != null) throw res.error!;
-    return RpcStream(FrameReader().frames(Stream<List<int>>.fromIterable([res.body ?? Uint8List(0)])));
+    final reader = FrameReader();
+    return RpcStream(
+      reader.frames(Stream<List<int>>.fromIterable([res.body ?? Uint8List(0)])),
+      () => reader.trailers,
+    );
   }
 
   Future<Uint8List> _roundTrip(Request req, _Response1 conn) async {
@@ -47,7 +61,7 @@ class Http2Transport implements Transport {
     final socket = await _connect(uri);
     final transport = ClientTransportConnection.viaSocket(socket);
     final headers = <Header>[
-      Header.ascii(':method', req.method),
+      Header.ascii(':method', 'POST'),
       Header.ascii(':path', uri.hasQuery ? '${uri.path}?${uri.query}' : uri.path),
       Header.ascii(':scheme', uri.scheme),
       Header.ascii(':authority', uri.host),

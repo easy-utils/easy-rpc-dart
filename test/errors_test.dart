@@ -17,36 +17,40 @@ Uint8List enc(String s) => Uint8List.fromList(utf8.encode(s));
 void main() {
   group('matrix: end-stream decode', () {
     test('M1 empty payload is a clean end', () {
-      final (c, m, d) = decodeEndStream(Uint8List(0));
-      expect((c, m, d), (0, '', null));
+      final es = decodeEndStream(Uint8List(0));
+      expect((es.code, es.message, es.details), (0, '', null));
     });
     test('M2 non-JSON payload is not an error', () {
-      final (c, _, _) = decodeEndStream(Uint8List.fromList([0xff, 0xfe, 0x00, 0x42]));
-      expect(c, 0);
+      final es = decodeEndStream(Uint8List.fromList([0xff, 0xfe, 0x00, 0x42]));
+      expect(es.code, 0);
     });
     test('M3 {"error":{}} maps to code 2 / empty message', () {
-      final (c, m, _) = decodeEndStream(enc('{"error":{}}'));
-      expect((c, m), (2, ''));
+      final es = decodeEndStream(enc('{"error":{}}'));
+      expect((es.code, es.message), (2, ''));
     });
     test('M4 unknown code name maps to 2', () {
-      final (c, m, _) = decodeEndStream(enc('{"error":{"code":"nope","message":"m"}}'));
-      expect((c, m), (2, 'm'));
+      final es = decodeEndStream(enc('{"error":{"code":"nope","message":"m"}}'));
+      expect((es.code, es.message), (2, 'm'));
     });
     test('M5 unknown fields ignored', () {
-      final (c, _, _) = decodeEndStream(enc('{"error":{"code":"not_found","message":"m"},"x":1}'));
-      expect(c, 5);
+      final es = decodeEndStream(enc('{"error":{"code":"not_found","message":"m"},"x":1}'));
+      expect(es.code, 5);
     });
     test('M6 details round-trip', () {
-      final payload = encodeEndStream(8, 'rate limited', [detail]);
-      final (c, m, d) = decodeEndStream(payload);
-      expect(c, 8);
-      expect(m, 'rate limited');
-      expect(d, [detail]);
+      final es = decodeEndStream(encodeEndStream(8, 'rate limited', [detail]));
+      expect(es.code, 8);
+      expect(es.message, 'rate limited');
+      expect(es.details, [detail]);
     });
     test('M7 malformed details entries skipped', () {
-      final (_, _, d) = decodeEndStream(enc(
+      final es = decodeEndStream(enc(
           '{"error":{"code":"resource_exhausted","details":[{"type":"t","value":"!!!"},{"value":"x"},{"type":"ok"},{"type":"t2","value":"AQID"}]}}'));
-      expect(d, [ErrorDetail('t2', Uint8List.fromList([1, 2, 3]))]);
+      expect(es.details, [ErrorDetail('t2', Uint8List.fromList([1, 2, 3]))]);
+    });
+    test('M14 END metadata is trailers', () {
+      final es = decodeEndStream(enc('{"metadata":{"x-trl":["v1","v2"]}}'));
+      expect(es.code, 0);
+      expect(es.metadata['x-trl'], ['v1', 'v2']);
     });
     test('details omitted when empty (v1.0 semantics)', () {
       expect(utf8.decode(encodeEndStream(5, 'gone')),

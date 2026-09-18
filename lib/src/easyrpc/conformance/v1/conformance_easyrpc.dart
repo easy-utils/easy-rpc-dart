@@ -6,57 +6,81 @@ import 'package:easy_rpc/src/easyrpc/conformance/v1/conformance.pb.dart' as m;
 class ConformanceServiceClient {
   final Transport _t;
   ConformanceServiceClient(this._t);
-  Request _req(String url, [Uint8List? body]) => Request(url: url, method: 'POST', body: body);
+  Request _req(String url, [Uint8List? body]) => Request(url: url, body: body);
+  Headers lastTrailers = const {};
+  RpcStream? lastStream;
 
   Future<m.HealthResponse> health(m.HealthRequest req) async {
-    final res = await _t.send(_req('/v1/health', req.writeToBuffer()));
+    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/Health', req.writeToBuffer()));
     if (res.error != null) throw res.error!;
+    lastTrailers = res.trailers;
     return m.HealthResponse.fromBuffer(res.body!);
   }
 
   Future<m.EchoResponse> echo(m.EchoRequest req) async {
-    final res = await _t.send(_req('/v1/echo', req.writeToBuffer()));
+    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/Echo', req.writeToBuffer()));
     if (res.error != null) throw res.error!;
+    lastTrailers = res.trailers;
     return m.EchoResponse.fromBuffer(res.body!);
   }
 
   Stream<m.CountResponse> count(m.CountRequest req) async* {
-    final st = await _t.openStream(_req('/v1/count', req.writeToBuffer()));
+    final st = await _t.openStream(_req('/easyrpc.conformance.v1.ConformanceService/Count', Uint8List.fromList(frame(req.writeToBuffer()))));
+    lastStream = st;
     await for (final chunk in st.messages) { yield m.CountResponse.fromBuffer(chunk); }
   }
 
   Future<m.FailResponse> fail(m.FailRequest req) async {
-    final res = await _t.send(_req('/v1/fail', req.writeToBuffer()));
+    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/Fail', req.writeToBuffer()));
     if (res.error != null) throw res.error!;
+    lastTrailers = res.trailers;
     return m.FailResponse.fromBuffer(res.body!);
   }
 
   Stream<m.StreamFailResponse> streamFail(m.StreamFailRequest req) async* {
-    final st = await _t.openStream(_req('/v1/stream-fail', req.writeToBuffer()));
+    final st = await _t.openStream(_req('/easyrpc.conformance.v1.ConformanceService/StreamFail', Uint8List.fromList(frame(req.writeToBuffer()))));
+    lastStream = st;
     await for (final chunk in st.messages) { yield m.StreamFailResponse.fromBuffer(chunk); }
   }
 
   Future<m.EchoMetaResponse> echoMeta(m.EchoMetaRequest req) async {
-    final res = await _t.send(_req('/v1/echo-meta', req.writeToBuffer()));
+    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/EchoMeta', req.writeToBuffer()));
     if (res.error != null) throw res.error!;
+    lastTrailers = res.trailers;
     return m.EchoMetaResponse.fromBuffer(res.body!);
   }
 
   Future<m.BigResponse> big(m.BigRequest req) async {
-    final res = await _t.send(_req('/v1/big', req.writeToBuffer()));
+    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/Big', req.writeToBuffer()));
     if (res.error != null) throw res.error!;
+    lastTrailers = res.trailers;
     return m.BigResponse.fromBuffer(res.body!);
   }
 
   Future<m.FailDetailsResponse> failDetails(m.FailDetailsRequest req) async {
-    final res = await _t.send(_req('/v1/fail-details', req.writeToBuffer()));
+    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/FailDetails', req.writeToBuffer()));
     if (res.error != null) throw res.error!;
+    lastTrailers = res.trailers;
     return m.FailDetailsResponse.fromBuffer(res.body!);
   }
 
   Stream<m.StreamFailDetailsResponse> streamFailDetails(m.StreamFailDetailsRequest req) async* {
-    final st = await _t.openStream(_req('/v1/stream-fail-details', req.writeToBuffer()));
+    final st = await _t.openStream(_req('/easyrpc.conformance.v1.ConformanceService/StreamFailDetails', Uint8List.fromList(frame(req.writeToBuffer()))));
+    lastStream = st;
     await for (final chunk in st.messages) { yield m.StreamFailDetailsResponse.fromBuffer(chunk); }
+  }
+
+  Future<m.EchoTrailerResponse> echoTrailer(m.EchoTrailerRequest req) async {
+    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/EchoTrailer', req.writeToBuffer()));
+    if (res.error != null) throw res.error!;
+    lastTrailers = res.trailers;
+    return m.EchoTrailerResponse.fromBuffer(res.body!);
+  }
+
+  Stream<m.CountTrailerResponse> countTrailer(m.CountTrailerRequest req) async* {
+    final st = await _t.openStream(_req('/easyrpc.conformance.v1.ConformanceService/CountTrailer', Uint8List.fromList(frame(req.writeToBuffer()))));
+    lastStream = st;
+    await for (final chunk in st.messages) { yield m.CountTrailerResponse.fromBuffer(chunk); }
   }
 
 }

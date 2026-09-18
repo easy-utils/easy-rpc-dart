@@ -1182,6 +1182,241 @@ class StreamFailDetailsResponse extends $pb.GeneratedMessage {
   void clearIndex() => $_clearField(1);
 }
 
+class EchoTrailerRequest extends $pb.GeneratedMessage {
+  factory EchoTrailerRequest({
+    $core.String? input,
+  }) {
+    final result = EchoTrailerRequest._();
+    if (input != null) result.input = input;
+    return result;
+  }
+
+  EchoTrailerRequest._();
+
+  factory EchoTrailerRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EchoTrailerRequest()..mergeFromBuffer(data, registry);
+  factory EchoTrailerRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EchoTrailerRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EchoTrailerRequest',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: EchoTrailerRequest.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'input')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EchoTrailerRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EchoTrailerRequest copyWith(void Function(EchoTrailerRequest) updates) =>
+      super.copyWith((message) => updates(message as EchoTrailerRequest))
+          as EchoTrailerRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EchoTrailerRequest() / EchoTrailerRequest.new instead')
+  static EchoTrailerRequest create() => EchoTrailerRequest._();
+  static $pb.GeneratedMessage $_createMessage() => EchoTrailerRequest._();
+  @$core.override
+  EchoTrailerRequest createEmptyInstance() => EchoTrailerRequest._();
+  @$core.pragma('dart2js:noInline')
+  static EchoTrailerRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<EchoTrailerRequest>(
+          EchoTrailerRequest.$_createMessage);
+  static EchoTrailerRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get input => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set input($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasInput() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearInput() => $_clearField(1);
+}
+
+class EchoTrailerResponse extends $pb.GeneratedMessage {
+  factory EchoTrailerResponse({
+    $core.String? output,
+  }) {
+    final result = EchoTrailerResponse._();
+    if (output != null) result.output = output;
+    return result;
+  }
+
+  EchoTrailerResponse._();
+
+  factory EchoTrailerResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EchoTrailerResponse()..mergeFromBuffer(data, registry);
+  factory EchoTrailerResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      EchoTrailerResponse()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EchoTrailerResponse',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: EchoTrailerResponse.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'output')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EchoTrailerResponse clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EchoTrailerResponse copyWith(void Function(EchoTrailerResponse) updates) =>
+      super.copyWith((message) => updates(message as EchoTrailerResponse))
+          as EchoTrailerResponse;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core
+      .Deprecated('Use EchoTrailerResponse() / EchoTrailerResponse.new instead')
+  static EchoTrailerResponse create() => EchoTrailerResponse._();
+  static $pb.GeneratedMessage $_createMessage() => EchoTrailerResponse._();
+  @$core.override
+  EchoTrailerResponse createEmptyInstance() => EchoTrailerResponse._();
+  @$core.pragma('dart2js:noInline')
+  static EchoTrailerResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<EchoTrailerResponse>(
+          EchoTrailerResponse.$_createMessage);
+  static EchoTrailerResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get output => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set output($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasOutput() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearOutput() => $_clearField(1);
+}
+
+class CountTrailerRequest extends $pb.GeneratedMessage {
+  factory CountTrailerRequest({
+    $core.int? count,
+  }) {
+    final result = CountTrailerRequest._();
+    if (count != null) result.count = count;
+    return result;
+  }
+
+  CountTrailerRequest._();
+
+  factory CountTrailerRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CountTrailerRequest()..mergeFromBuffer(data, registry);
+  factory CountTrailerRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CountTrailerRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'CountTrailerRequest',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: CountTrailerRequest.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'count')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CountTrailerRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CountTrailerRequest copyWith(void Function(CountTrailerRequest) updates) =>
+      super.copyWith((message) => updates(message as CountTrailerRequest))
+          as CountTrailerRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core
+      .Deprecated('Use CountTrailerRequest() / CountTrailerRequest.new instead')
+  static CountTrailerRequest create() => CountTrailerRequest._();
+  static $pb.GeneratedMessage $_createMessage() => CountTrailerRequest._();
+  @$core.override
+  CountTrailerRequest createEmptyInstance() => CountTrailerRequest._();
+  @$core.pragma('dart2js:noInline')
+  static CountTrailerRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<CountTrailerRequest>(
+          CountTrailerRequest.$_createMessage);
+  static CountTrailerRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get count => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set count($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasCount() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCount() => $_clearField(1);
+}
+
+class CountTrailerResponse extends $pb.GeneratedMessage {
+  factory CountTrailerResponse({
+    $core.int? index,
+  }) {
+    final result = CountTrailerResponse._();
+    if (index != null) result.index = index;
+    return result;
+  }
+
+  CountTrailerResponse._();
+
+  factory CountTrailerResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CountTrailerResponse()..mergeFromBuffer(data, registry);
+  factory CountTrailerResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      CountTrailerResponse()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'CountTrailerResponse',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'easyrpc.conformance.v1'),
+      createEmptyInstance: CountTrailerResponse.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'index')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CountTrailerResponse clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  CountTrailerResponse copyWith(void Function(CountTrailerResponse) updates) =>
+      super.copyWith((message) => updates(message as CountTrailerResponse))
+          as CountTrailerResponse;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use CountTrailerResponse() / CountTrailerResponse.new instead')
+  static CountTrailerResponse create() => CountTrailerResponse._();
+  static $pb.GeneratedMessage $_createMessage() => CountTrailerResponse._();
+  @$core.override
+  CountTrailerResponse createEmptyInstance() => CountTrailerResponse._();
+  @$core.pragma('dart2js:noInline')
+  static CountTrailerResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<CountTrailerResponse>(
+          CountTrailerResponse.$_createMessage);
+  static CountTrailerResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get index => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set index($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasIndex() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIndex() => $_clearField(1);
+}
+
 class ConformanceServiceApi {
   final $pb.RpcClient _client;
 
@@ -1216,7 +1451,7 @@ class ConformanceServiceApi {
       _client.invoke<EchoMetaResponse>(
           ctx, 'ConformanceService', 'EchoMeta', request, EchoMetaResponse());
 
-  /// Return `size` bytes to exercise max-message behavior.
+  /// Return `size` bytes to exercise max-message behavior (and unary gzip).
   $async.Future<BigResponse> big($pb.ClientContext? ctx, BigRequest request) =>
       _client.invoke<BigResponse>(
           ctx, 'ConformanceService', 'Big', request, BigResponse());
@@ -1232,6 +1467,18 @@ class ConformanceServiceApi {
           $pb.ClientContext? ctx, StreamFailDetailsRequest request) =>
       _client.invoke<StreamFailDetailsResponse>(ctx, 'ConformanceService',
           'StreamFailDetails', request, StreamFailDetailsResponse());
+
+  /// Set unary trailing metadata (wire: response headers prefixed `trailer-`).
+  $async.Future<EchoTrailerResponse> echoTrailer(
+          $pb.ClientContext? ctx, EchoTrailerRequest request) =>
+      _client.invoke<EchoTrailerResponse>(ctx, 'ConformanceService',
+          'EchoTrailer', request, EchoTrailerResponse());
+
+  /// Set streaming trailing metadata (wire: END-frame JSON `metadata`).
+  $async.Future<CountTrailerResponse> countTrailer(
+          $pb.ClientContext? ctx, CountTrailerRequest request) =>
+      _client.invoke<CountTrailerResponse>(ctx, 'ConformanceService',
+          'CountTrailer', request, CountTrailerResponse());
 }
 
 const $core.bool _omitFieldNames =

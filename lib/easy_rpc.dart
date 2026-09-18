@@ -57,7 +57,6 @@ class RPCError implements Exception {
 
 class Request {
   final String url;
-  final String method;
   final Headers headers;
   final Uint8List? body;
   /// Local cancellation channel (a Completer that completes on abort). Adapters
@@ -65,7 +64,6 @@ class Request {
   final Future<void>? abort;
   Request({
     required this.url,
-    this.method = 'POST',
     this.headers = const {},
     this.body,
     this.abort,
@@ -76,9 +74,10 @@ class Response {
   final int status;
   final Headers headers;
   final Uint8List? body;
+  /// Unary trailing metadata (demuxed from `trailer-*` response headers).
+  final Headers trailers;
   final RPCError? error;
-  Response({required this.status, this.headers = const {}, this.body, this.error});
-
+  Response({required this.status, this.headers = const {}, this.body, this.trailers = const {}, this.error});
 }
 
 int httpStatus(int code) => switch (code) {
@@ -213,30 +212,94 @@ Uint8List frame(Uint8List payload, {bool end = false}) {
 
 /// Encode an END-frame payload in the Connect end-stream JSON shape; a clean
 /// end is empty. Details (spec §4.1) are included when non-empty.
-Uint8List encodeEndStream(int code, String message, [List<ErrorDetail>? details]) {
-  if (code == 0) return Uint8List(0);
-  final err = <String, Object?>{'code': codeToString(code), 'message': message};
-  final wire = _wireDetails(details);
-  if (wire.isNotEmpty) err['details'] = wire;
-  return Uint8List.fromList(utf8.encode(jsonEncode({'error': err})));
+Uint8List encodeEndStream(int code, String message,
+    [List<ErrorDetail>? details, Headers metadata = const {}]) {
+  final obj = <String, Object?>{};
+  if (code != 0) {
+    final err = <String, Object?>{'code': codeToString(code), 'message': message};
+    final wire = _wireDetails(details);
+    if (wire.isNotEmpty) err['details'] = wire;
+    obj['error'] = err;
+  }
+  if (metadata.isNotEmpty) {
+    final md = <String, List<String>>{};
+    metadata.forEach((k, v) { if (v.isNotEmpty) md[k] = v; });
+    if (md.isNotEmpty) obj['metadata'] = md;
+  }
+  return Uint8List.fromList(utf8.encode(jsonEncode(obj)));
 }
+
+/// A decoded END frame: code/message/details + trailing metadata.
+class EndStream {
+  final int code;
+  final String message;
+  final List<ErrorDetail>? details;
+  final Headers metadata;
+  EndStream(this.code, this.message, this.details, this.metadata);
+}
+
+/// Split headers into (headers, trailers) by the `trailer-` prefix.
+(Headers, Headers) demuxTrailers(Headers all) {
+  final h = <String, List<String>>{};
+  final t = <String, List<String>>{};
+  all.forEach((k, v) {
+    if (k.toLowerCase().startsWith('trailer-')) {
+      t[k.substring(8).toLowerCase()] = v;
+    } else {
+      h[k] = v;
+    }
+  });
+  return (h, t);
+}
+
+/// Merge trailers into headers using the `trailer-` prefix.
+Headers muxTrailers(Headers headers, Headers trailers) {
+  final out = Map<String, List<String>>.from(headers);
+  trailers.forEach((k, v) => out['trailer-${k.toLowerCase()}'] = v);
+  return out;
+}
+
+/// Per-RPC context for generated handlers: request metadata + trailer channel.
+class HandlerContext {
+  final Headers headers;
+  final _trailers = <String, List<String>>{};
+  HandlerContext(this.headers);
+  void setTrailer(String key, String value) =>
+      _trailers[key] = [...(_trailers[key] ?? const []), value];
+  Headers get trailers => _trailers;
+}
+
+const String kContentTypeUnary = 'application/proto';
+const String kContentTypeStream = 'application/connect+proto';
 
 /// Decode a Connect end-stream payload into (code, message, details);
 /// (0, '', null) = clean end. Malformed input is a clean end (matrix M2); an
 /// error object without a code maps to 2 (M3/M4); unknown fields ignored (M5).
-(int, String, List<ErrorDetail>?) decodeEndStream(Uint8List payload) {
-  if (payload.isEmpty) return (0, '', null);
+EndStream decodeEndStream(Uint8List payload) {
+  if (payload.isEmpty) return EndStream(0, '', null, const {});
   try {
     final v = jsonDecode(utf8.decode(payload));
-    if (v is! Map || v['error'] is! Map) return (0, '', null);
-    final e = v['error'] as Map;
-    return (
+    if (v is! Map) return EndStream(0, '', null, const {});
+    var metadata = <String, List<String>>{};
+    final md = v['metadata'];
+    if (md is Map) {
+      md.forEach((k, val) {
+        if (k is String && val is List) {
+          final vs = val.whereType<String>().toList();
+          if (vs.isNotEmpty) metadata[k] = vs;
+        }
+      });
+    }
+    final e = v['error'];
+    if (e is! Map) return EndStream(0, '', null, metadata);
+    return EndStream(
       e['code'] is String ? codeFromString(e['code'] as String) : 2,
       e['message'] is String ? e['message'] as String : '',
       _parseWireDetails(e['details']),
+      metadata,
     );
   } catch (_) {
-    return (0, '', null);
+    return EndStream(0, '', null, const {});
   }
 }
 
@@ -276,7 +339,6 @@ Request withTimeout(Request req, int timeoutMs) {
   if (timeoutMs <= 0) return req;
   return Request(
     url: req.url,
-    method: req.method,
     headers: {...req.headers, kHeaderTimeout: ['$timeoutMs']},
     body: req.body,
   );
@@ -284,6 +346,7 @@ Request withTimeout(Request req, int timeoutMs) {
 
 class FrameReader {
   Uint8List _acc = Uint8List(0);
+  Headers trailers = const {};
   Stream<Uint8List> frames(Stream<List<int>> chunks) async* {
     var sawEnd = false;
     await for (final c in chunks) {
@@ -303,8 +366,9 @@ class FrameReader {
         }
         if ((flags & kEndStream) != 0) {
           sawEnd = true;
-          final (code, message, details) = decodeEndStream(payload);
-          if (code != 0) throw RPCError(code, message, details);
+          final es = decodeEndStream(payload);
+          if (es.metadata.isNotEmpty) trailers = es.metadata;
+          if (es.code != 0) throw RPCError(es.code, es.message, es.details);
           return;
         }
         yield payload;
@@ -359,8 +423,11 @@ Transport connect({
 
 class RpcStream {
   final Stream<Uint8List> _payloads;
-  RpcStream(this._payloads);
+  final Headers Function() _trailers;
+  RpcStream(this._payloads, [this._trailers = _noTrailers]);
+  static Headers _noTrailers() => const {};
   Stream<Uint8List> get messages => _payloads;
+  Headers trailers() => _trailers();
   void cancel() {}
 }
 
@@ -415,7 +482,7 @@ class MetadataInterceptor extends Interceptor {
   Request _aug(Request req) {
     final h = Map<String, List<String>>.from(req.headers);
     for (final e in md.entries) { h.putIfAbsent(e.key, () => e.value); }
-    return Request(url: req.url, method: req.method, headers: h, body: req.body);
+    return Request(url: req.url, headers: h, body: req.body);
   }
   @override
   Future<Response> unary(Request req, Future<Response> Function(Request) n) => n(_aug(req));
@@ -434,7 +501,6 @@ class TimeoutInterceptor extends Interceptor {
     final ctrl = Completer<void>();
     final withAbort = Request(
       url: req.url,
-      method: req.method,
       headers: req.headers,
       body: req.body,
       abort: ctrl.future,
@@ -466,7 +532,7 @@ class IoTransport implements Transport {
   @override
   Future<Response> send(Request req) async {
     final uri = Uri.parse(_url(req.url));
-    final r = await _client.openUrl(req.method, uri);
+    final r = await _client.openUrl('POST', uri);
     // Caller-supplied headers first (incl. a caller content-type — the JSON
     // codec depends on it); default ONLY when absent, shaped per call type.
     final hasCt = req.headers.keys.any((k) => k.toLowerCase() == 'content-type');
@@ -476,14 +542,20 @@ class IoTransport implements Transport {
       }
     });
     if (!hasCt) r.headers.contentType = io.ContentType('application', 'proto');
+    r.headers.add('Accept-Encoding', 'gzip');
     if (req.body != null) r.add(req.body!);
     final resp = await r.close();
-    final body = await resp.fold<Uint8List>(Uint8List(0), (a, b) => Uint8List.fromList([...a, ...b]));
-    final hdrs = _hdrs(resp.headers);
+    var body = await resp.fold<Uint8List>(Uint8List(0), (a, b) => Uint8List.fromList([...a, ...b]));
+    final all = _hdrs(resp.headers);
+    final (hdrs, trailers) = demuxTrailers(all);
+    if ((hdrs['content-encoding']?.isNotEmpty ?? false) && hdrs['content-encoding']!.first == 'gzip' && body.isNotEmpty) {
+      body = Uint8List.fromList(gzipDecompress(body));
+    }
     return Response(
       status: resp.statusCode,
       headers: hdrs,
       body: body,
+      trailers: trailers,
       error: resp.statusCode >= 300 ? _errorOf(hdrs, resp.statusCode, body) : null,
     );
   }
@@ -491,7 +563,7 @@ class IoTransport implements Transport {
   @override
   Future<RpcStream> openStream(Request req) async {
     final uri = Uri.parse(_url(req.url));
-    final r = await _client.openUrl(req.method, uri);
+    final r = await _client.openUrl('POST', uri);
     // Caller-supplied headers first; default ONLY when absent.
     final hasCt = req.headers.keys.any((k) => k.toLowerCase() == 'content-type');
     req.headers.forEach((k, vs) {
@@ -502,11 +574,12 @@ class IoTransport implements Transport {
     if (!hasCt) {
       r.headers.contentType = io.ContentType('application', 'connect+proto');
     }
+    r.headers.add('Connect-Accept-Encoding', 'gzip');
     if (req.body != null) r.add(req.body!);
     final resp = await r.close();
-    // Use raw byte stream: resp is Stream<List<int>>.
     final raw = resp as Stream<List<int>>;
-    return RpcStream(FrameReader().frames(raw));
+    final reader = FrameReader();
+    return RpcStream(reader.frames(raw), () => reader.trailers);
   }
 
   /// Reconstruct the exact RPCError from the `connect-code`/`connect-error`

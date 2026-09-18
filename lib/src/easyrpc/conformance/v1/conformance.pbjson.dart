@@ -267,64 +267,117 @@ final $typed_data.Uint8List streamFailDetailsResponseDescriptor =
     $convert.base64Decode(
         'ChlTdHJlYW1GYWlsRGV0YWlsc1Jlc3BvbnNlEhQKBWluZGV4GAEgASgFUgVpbmRleA==');
 
+@$core.Deprecated('Use echoTrailerRequestDescriptor instead')
+const EchoTrailerRequest$json = {
+  '1': 'EchoTrailerRequest',
+  '2': [
+    {'1': 'input', '3': 1, '4': 1, '5': 9, '10': 'input'},
+  ],
+};
+
+/// Descriptor for `EchoTrailerRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List echoTrailerRequestDescriptor = $convert
+    .base64Decode('ChJFY2hvVHJhaWxlclJlcXVlc3QSFAoFaW5wdXQYASABKAlSBWlucHV0');
+
+@$core.Deprecated('Use echoTrailerResponseDescriptor instead')
+const EchoTrailerResponse$json = {
+  '1': 'EchoTrailerResponse',
+  '2': [
+    {'1': 'output', '3': 1, '4': 1, '5': 9, '10': 'output'},
+  ],
+};
+
+/// Descriptor for `EchoTrailerResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List echoTrailerResponseDescriptor =
+    $convert.base64Decode(
+        'ChNFY2hvVHJhaWxlclJlc3BvbnNlEhYKBm91dHB1dBgBIAEoCVIGb3V0cHV0');
+
+@$core.Deprecated('Use countTrailerRequestDescriptor instead')
+const CountTrailerRequest$json = {
+  '1': 'CountTrailerRequest',
+  '2': [
+    {'1': 'count', '3': 1, '4': 1, '5': 5, '10': 'count'},
+  ],
+};
+
+/// Descriptor for `CountTrailerRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List countTrailerRequestDescriptor =
+    $convert.base64Decode(
+        'ChNDb3VudFRyYWlsZXJSZXF1ZXN0EhQKBWNvdW50GAEgASgFUgVjb3VudA==');
+
+@$core.Deprecated('Use countTrailerResponseDescriptor instead')
+const CountTrailerResponse$json = {
+  '1': 'CountTrailerResponse',
+  '2': [
+    {'1': 'index', '3': 1, '4': 1, '5': 5, '10': 'index'},
+  ],
+};
+
+/// Descriptor for `CountTrailerResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List countTrailerResponseDescriptor =
+    $convert.base64Decode(
+        'ChRDb3VudFRyYWlsZXJSZXNwb25zZRIUCgVpbmRleBgBIAEoBVIFaW5kZXg=');
+
 const $core.Map<$core.String, $core.dynamic> ConformanceServiceBase$json = {
   '1': 'ConformanceService',
   '2': [
     {
       '1': 'Health',
       '2': '.easyrpc.conformance.v1.HealthRequest',
-      '3': '.easyrpc.conformance.v1.HealthResponse',
-      '4': {}
+      '3': '.easyrpc.conformance.v1.HealthResponse'
     },
     {
       '1': 'Echo',
       '2': '.easyrpc.conformance.v1.EchoRequest',
-      '3': '.easyrpc.conformance.v1.EchoResponse',
-      '4': {}
+      '3': '.easyrpc.conformance.v1.EchoResponse'
     },
     {
       '1': 'Count',
       '2': '.easyrpc.conformance.v1.CountRequest',
       '3': '.easyrpc.conformance.v1.CountResponse',
-      '4': {},
       '6': true
     },
     {
       '1': 'Fail',
       '2': '.easyrpc.conformance.v1.FailRequest',
-      '3': '.easyrpc.conformance.v1.FailResponse',
-      '4': {}
+      '3': '.easyrpc.conformance.v1.FailResponse'
     },
     {
       '1': 'StreamFail',
       '2': '.easyrpc.conformance.v1.StreamFailRequest',
       '3': '.easyrpc.conformance.v1.StreamFailResponse',
-      '4': {},
       '6': true
     },
     {
       '1': 'EchoMeta',
       '2': '.easyrpc.conformance.v1.EchoMetaRequest',
-      '3': '.easyrpc.conformance.v1.EchoMetaResponse',
-      '4': {}
+      '3': '.easyrpc.conformance.v1.EchoMetaResponse'
     },
     {
       '1': 'Big',
       '2': '.easyrpc.conformance.v1.BigRequest',
-      '3': '.easyrpc.conformance.v1.BigResponse',
-      '4': {}
+      '3': '.easyrpc.conformance.v1.BigResponse'
     },
     {
       '1': 'FailDetails',
       '2': '.easyrpc.conformance.v1.FailDetailsRequest',
-      '3': '.easyrpc.conformance.v1.FailDetailsResponse',
-      '4': {}
+      '3': '.easyrpc.conformance.v1.FailDetailsResponse'
     },
     {
       '1': 'StreamFailDetails',
       '2': '.easyrpc.conformance.v1.StreamFailDetailsRequest',
       '3': '.easyrpc.conformance.v1.StreamFailDetailsResponse',
-      '4': {},
+      '6': true
+    },
+    {
+      '1': 'EchoTrailer',
+      '2': '.easyrpc.conformance.v1.EchoTrailerRequest',
+      '3': '.easyrpc.conformance.v1.EchoTrailerResponse'
+    },
+    {
+      '1': 'CountTrailer',
+      '2': '.easyrpc.conformance.v1.CountTrailerRequest',
+      '3': '.easyrpc.conformance.v1.CountTrailerResponse',
       '6': true
     },
   ],
@@ -355,27 +408,31 @@ const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
       StreamFailDetailsRequest$json,
   '.easyrpc.conformance.v1.StreamFailDetailsResponse':
       StreamFailDetailsResponse$json,
+  '.easyrpc.conformance.v1.EchoTrailerRequest': EchoTrailerRequest$json,
+  '.easyrpc.conformance.v1.EchoTrailerResponse': EchoTrailerResponse$json,
+  '.easyrpc.conformance.v1.CountTrailerRequest': CountTrailerRequest$json,
+  '.easyrpc.conformance.v1.CountTrailerResponse': CountTrailerResponse$json,
 };
 
 /// Descriptor for `ConformanceService`. Decode as a `google.protobuf.ServiceDescriptorProto`.
 final $typed_data.Uint8List conformanceServiceDescriptor = $convert.base64Decode(
-    'ChJDb25mb3JtYW5jZVNlcnZpY2USawoGSGVhbHRoEiUuZWFzeXJwYy5jb25mb3JtYW5jZS52MS'
-    '5IZWFsdGhSZXF1ZXN0GiYuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5IZWFsdGhSZXNwb25zZSIS'
-    'gtPkkwIMEgovdjEvaGVhbHRoEmYKBEVjaG8SIy5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLkVjaG'
-    '9SZXF1ZXN0GiQuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5FY2hvUmVzcG9uc2UiE4LT5JMCDSII'
-    'L3YxL2VjaG86ASoSbAoFQ291bnQSJC5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLkNvdW50UmVxdW'
-    'VzdBolLmVhc3lycGMuY29uZm9ybWFuY2UudjEuQ291bnRSZXNwb25zZSIUgtPkkwIOIgkvdjEv'
-    'Y291bnQ6ASowARJmCgRGYWlsEiMuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5GYWlsUmVxdWVzdB'
-    'okLmVhc3lycGMuY29uZm9ybWFuY2UudjEuRmFpbFJlc3BvbnNlIhOC0+STAg0iCC92MS9mYWls'
-    'OgEqEoEBCgpTdHJlYW1GYWlsEikuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5TdHJlYW1GYWlsUm'
-    'VxdWVzdBoqLmVhc3lycGMuY29uZm9ybWFuY2UudjEuU3RyZWFtRmFpbFJlc3BvbnNlIhqC0+ST'
-    'AhQiDy92MS9zdHJlYW0tZmFpbDoBKjABEncKCEVjaG9NZXRhEicuZWFzeXJwYy5jb25mb3JtYW'
-    '5jZS52MS5FY2hvTWV0YVJlcXVlc3QaKC5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLkVjaG9NZXRh'
-    'UmVzcG9uc2UiGILT5JMCEiINL3YxL2VjaG8tbWV0YToBKhJiCgNCaWcSIi5lYXN5cnBjLmNvbm'
-    'Zvcm1hbmNlLnYxLkJpZ1JlcXVlc3QaIy5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLkJpZ1Jlc3Bv'
-    'bnNlIhKC0+STAgwiBy92MS9iaWc6ASoSgwEKC0ZhaWxEZXRhaWxzEiouZWFzeXJwYy5jb25mb3'
-    'JtYW5jZS52MS5GYWlsRGV0YWlsc1JlcXVlc3QaKy5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLkZh'
-    'aWxEZXRhaWxzUmVzcG9uc2UiG4LT5JMCFSIQL3YxL2ZhaWwtZGV0YWlsczoBKhKeAQoRU3RyZW'
-    'FtRmFpbERldGFpbHMSMC5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLlN0cmVhbUZhaWxEZXRhaWxz'
-    'UmVxdWVzdBoxLmVhc3lycGMuY29uZm9ybWFuY2UudjEuU3RyZWFtRmFpbERldGFpbHNSZXNwb2'
-    '5zZSIigtPkkwIcIhcvdjEvc3RyZWFtLWZhaWwtZGV0YWlsczoBKjAB');
+    'ChJDb25mb3JtYW5jZVNlcnZpY2USVwoGSGVhbHRoEiUuZWFzeXJwYy5jb25mb3JtYW5jZS52MS'
+    '5IZWFsdGhSZXF1ZXN0GiYuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5IZWFsdGhSZXNwb25zZRJR'
+    'CgRFY2hvEiMuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5FY2hvUmVxdWVzdBokLmVhc3lycGMuY2'
+    '9uZm9ybWFuY2UudjEuRWNob1Jlc3BvbnNlElYKBUNvdW50EiQuZWFzeXJwYy5jb25mb3JtYW5j'
+    'ZS52MS5Db3VudFJlcXVlc3QaJS5lYXN5cnBjLmNvbmZvcm1hbmNlLnYxLkNvdW50UmVzcG9uc2'
+    'UwARJRCgRGYWlsEiMuZWFzeXJwYy5jb25mb3JtYW5jZS52MS5GYWlsUmVxdWVzdBokLmVhc3ly'
+    'cGMuY29uZm9ybWFuY2UudjEuRmFpbFJlc3BvbnNlEmUKClN0cmVhbUZhaWwSKS5lYXN5cnBjLm'
+    'NvbmZvcm1hbmNlLnYxLlN0cmVhbUZhaWxSZXF1ZXN0GiouZWFzeXJwYy5jb25mb3JtYW5jZS52'
+    'MS5TdHJlYW1GYWlsUmVzcG9uc2UwARJdCghFY2hvTWV0YRInLmVhc3lycGMuY29uZm9ybWFuY2'
+    'UudjEuRWNob01ldGFSZXF1ZXN0GiguZWFzeXJwYy5jb25mb3JtYW5jZS52MS5FY2hvTWV0YVJl'
+    'c3BvbnNlEk4KA0JpZxIiLmVhc3lycGMuY29uZm9ybWFuY2UudjEuQmlnUmVxdWVzdBojLmVhc3'
+    'lycGMuY29uZm9ybWFuY2UudjEuQmlnUmVzcG9uc2USZgoLRmFpbERldGFpbHMSKi5lYXN5cnBj'
+    'LmNvbmZvcm1hbmNlLnYxLkZhaWxEZXRhaWxzUmVxdWVzdBorLmVhc3lycGMuY29uZm9ybWFuY2'
+    'UudjEuRmFpbERldGFpbHNSZXNwb25zZRJ6ChFTdHJlYW1GYWlsRGV0YWlscxIwLmVhc3lycGMu'
+    'Y29uZm9ybWFuY2UudjEuU3RyZWFtRmFpbERldGFpbHNSZXF1ZXN0GjEuZWFzeXJwYy5jb25mb3'
+    'JtYW5jZS52MS5TdHJlYW1GYWlsRGV0YWlsc1Jlc3BvbnNlMAESZgoLRWNob1RyYWlsZXISKi5l'
+    'YXN5cnBjLmNvbmZvcm1hbmNlLnYxLkVjaG9UcmFpbGVyUmVxdWVzdBorLmVhc3lycGMuY29uZm'
+    '9ybWFuY2UudjEuRWNob1RyYWlsZXJSZXNwb25zZRJrCgxDb3VudFRyYWlsZXISKy5lYXN5cnBj'
+    'LmNvbmZvcm1hbmNlLnYxLkNvdW50VHJhaWxlclJlcXVlc3QaLC5lYXN5cnBjLmNvbmZvcm1hbm'
+    'NlLnYxLkNvdW50VHJhaWxlclJlc3BvbnNlMAE=');
