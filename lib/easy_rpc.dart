@@ -467,12 +467,15 @@ class IoTransport implements Transport {
   Future<Response> send(Request req) async {
     final uri = Uri.parse(_url(req.url));
     final r = await _client.openUrl(req.method, uri);
-    r.headers.contentType = io.ContentType('application', 'proto');
+    // Caller-supplied headers first (incl. a caller content-type — the JSON
+    // codec depends on it); default ONLY when absent, shaped per call type.
+    final hasCt = req.headers.keys.any((k) => k.toLowerCase() == 'content-type');
     req.headers.forEach((k, vs) {
       for (final v in vs) {
         r.headers.add(k, v);
       }
     });
+    if (!hasCt) r.headers.contentType = io.ContentType('application', 'proto');
     if (req.body != null) r.add(req.body!);
     final resp = await r.close();
     final body = await resp.fold<Uint8List>(Uint8List(0), (a, b) => Uint8List.fromList([...a, ...b]));
@@ -489,12 +492,16 @@ class IoTransport implements Transport {
   Future<RpcStream> openStream(Request req) async {
     final uri = Uri.parse(_url(req.url));
     final r = await _client.openUrl(req.method, uri);
-    r.headers.contentType = io.ContentType('application', 'connect+proto');
+    // Caller-supplied headers first; default ONLY when absent.
+    final hasCt = req.headers.keys.any((k) => k.toLowerCase() == 'content-type');
     req.headers.forEach((k, vs) {
       for (final v in vs) {
         r.headers.add(k, v);
       }
     });
+    if (!hasCt) {
+      r.headers.contentType = io.ContentType('application', 'connect+proto');
+    }
     if (req.body != null) r.add(req.body!);
     final resp = await r.close();
     // Use raw byte stream: resp is Stream<List<int>>.
