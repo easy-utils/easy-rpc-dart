@@ -20,16 +20,23 @@ class Http2Transport implements Transport {
   Future<Response> send(Request req) async {
     final connection = _Response1();
     final stream = await _roundTrip(req, connection);
-    final hdrs = _mapHeaders(connection.headers);
+    final all = _mapHeaders(connection.headers);
+    final (hdrs, trailers) = demuxTrailers(all);
+    var body = stream;
+    final ce = hdrs['content-encoding'];
+    if (ce != null && ce.isNotEmpty && ce.first == 'gzip' && body.isNotEmpty) {
+      body = Uint8List.fromList(gzipDecompress(body));
+    }
     // Shared fallback chain: connect-code header (merging details from the
     // JSON body) -> Connect JSON body -> lossy status mapping.
     final err = connection.status >= 300
-        ? rpcResponseError(connection.status, hdrs, stream)
+        ? rpcResponseError(connection.status, hdrs, body)
         : null;
     return Response(
       status: connection.status,
       headers: hdrs,
-      body: stream,
+      body: body,
+      trailers: trailers,
       error: err,
     );
   }
