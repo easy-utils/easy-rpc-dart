@@ -10,104 +10,119 @@ class ConformanceServiceClient {
   Headers lastTrailers = const {};
   RpcStream? lastStream;
 
-  Future<m.HealthResponse> health(m.HealthRequest req) async {
-    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/Health', req.writeToBuffer()));
+  Future<m.HealthResponse> health(m.HealthRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/easyrpc.conformance.v1.ConformanceService/Health', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
     lastTrailers = res.trailers;
-    return m.HealthResponse.fromBuffer(res.body!);
+    return decodeMsg<m.HealthResponse>(res.body!, () => m.HealthResponse(), kind);
   }
 
-  Future<m.EchoResponse> echo(m.EchoRequest req) async {
-    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/Echo', req.writeToBuffer()));
+  Future<m.EchoResponse> echo(m.EchoRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/easyrpc.conformance.v1.ConformanceService/Echo', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
     lastTrailers = res.trailers;
-    return m.EchoResponse.fromBuffer(res.body!);
+    return decodeMsg<m.EchoResponse>(res.body!, () => m.EchoResponse(), kind);
   }
 
-  Stream<m.CountResponse> count(m.CountRequest req) async* {
-    final st = await _t.openStream(_req('/easyrpc.conformance.v1.ConformanceService/Count', Uint8List.fromList(frame(req.writeToBuffer()))));
+  Stream<m.CountResponse> count(m.CountRequest req, {String kind = 'proto'}) async* {
+    final ct = contentTypeFor(true, kind);
+    final st = await _t.openStream(Request(url: '/easyrpc.conformance.v1.ConformanceService/Count', headers: {'content-type': [ct]}, body: Uint8List.fromList(frame(encodeMsg(req, kind)))));
     lastStream = st;
-    await for (final chunk in st.messages) { yield m.CountResponse.fromBuffer(chunk); }
+    await for (final chunk in st.messages) { yield decodeMsg<m.CountResponse>(chunk, () => m.CountResponse(), kind); }
   }
 
-  Future<m.FailResponse> fail(m.FailRequest req) async {
-    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/Fail', req.writeToBuffer()));
+  Future<m.FailResponse> fail(m.FailRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/easyrpc.conformance.v1.ConformanceService/Fail', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
     lastTrailers = res.trailers;
-    return m.FailResponse.fromBuffer(res.body!);
+    return decodeMsg<m.FailResponse>(res.body!, () => m.FailResponse(), kind);
   }
 
-  Stream<m.StreamFailResponse> streamFail(m.StreamFailRequest req) async* {
-    final st = await _t.openStream(_req('/easyrpc.conformance.v1.ConformanceService/StreamFail', Uint8List.fromList(frame(req.writeToBuffer()))));
+  Stream<m.StreamFailResponse> streamFail(m.StreamFailRequest req, {String kind = 'proto'}) async* {
+    final ct = contentTypeFor(true, kind);
+    final st = await _t.openStream(Request(url: '/easyrpc.conformance.v1.ConformanceService/StreamFail', headers: {'content-type': [ct]}, body: Uint8List.fromList(frame(encodeMsg(req, kind)))));
     lastStream = st;
-    await for (final chunk in st.messages) { yield m.StreamFailResponse.fromBuffer(chunk); }
+    await for (final chunk in st.messages) { yield decodeMsg<m.StreamFailResponse>(chunk, () => m.StreamFailResponse(), kind); }
   }
 
-  Future<m.EchoMetaResponse> echoMeta(m.EchoMetaRequest req) async {
-    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/EchoMeta', req.writeToBuffer()));
+  Future<m.EchoMetaResponse> echoMeta(m.EchoMetaRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/easyrpc.conformance.v1.ConformanceService/EchoMeta', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
     lastTrailers = res.trailers;
-    return m.EchoMetaResponse.fromBuffer(res.body!);
+    return decodeMsg<m.EchoMetaResponse>(res.body!, () => m.EchoMetaResponse(), kind);
   }
 
-  Future<m.BigResponse> big(m.BigRequest req) async {
-    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/Big', req.writeToBuffer()));
+  Future<m.BigResponse> big(m.BigRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/easyrpc.conformance.v1.ConformanceService/Big', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
     lastTrailers = res.trailers;
-    return m.BigResponse.fromBuffer(res.body!);
+    return decodeMsg<m.BigResponse>(res.body!, () => m.BigResponse(), kind);
   }
 
-  Future<m.FailDetailsResponse> failDetails(m.FailDetailsRequest req) async {
-    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/FailDetails', req.writeToBuffer()));
+  Future<m.FailDetailsResponse> failDetails(m.FailDetailsRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/easyrpc.conformance.v1.ConformanceService/FailDetails', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
     lastTrailers = res.trailers;
-    return m.FailDetailsResponse.fromBuffer(res.body!);
+    return decodeMsg<m.FailDetailsResponse>(res.body!, () => m.FailDetailsResponse(), kind);
   }
 
-  Stream<m.StreamFailDetailsResponse> streamFailDetails(m.StreamFailDetailsRequest req) async* {
-    final st = await _t.openStream(_req('/easyrpc.conformance.v1.ConformanceService/StreamFailDetails', Uint8List.fromList(frame(req.writeToBuffer()))));
+  Stream<m.StreamFailDetailsResponse> streamFailDetails(m.StreamFailDetailsRequest req, {String kind = 'proto'}) async* {
+    final ct = contentTypeFor(true, kind);
+    final st = await _t.openStream(Request(url: '/easyrpc.conformance.v1.ConformanceService/StreamFailDetails', headers: {'content-type': [ct]}, body: Uint8List.fromList(frame(encodeMsg(req, kind)))));
     lastStream = st;
-    await for (final chunk in st.messages) { yield m.StreamFailDetailsResponse.fromBuffer(chunk); }
+    await for (final chunk in st.messages) { yield decodeMsg<m.StreamFailDetailsResponse>(chunk, () => m.StreamFailDetailsResponse(), kind); }
   }
 
-  Future<m.EchoTrailerResponse> echoTrailer(m.EchoTrailerRequest req) async {
-    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/EchoTrailer', req.writeToBuffer()));
+  Future<m.EchoTrailerResponse> echoTrailer(m.EchoTrailerRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/easyrpc.conformance.v1.ConformanceService/EchoTrailer', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
     lastTrailers = res.trailers;
-    return m.EchoTrailerResponse.fromBuffer(res.body!);
+    return decodeMsg<m.EchoTrailerResponse>(res.body!, () => m.EchoTrailerResponse(), kind);
   }
 
-  Stream<m.CountTrailerResponse> countTrailer(m.CountTrailerRequest req) async* {
-    final st = await _t.openStream(_req('/easyrpc.conformance.v1.ConformanceService/CountTrailer', Uint8List.fromList(frame(req.writeToBuffer()))));
+  Stream<m.CountTrailerResponse> countTrailer(m.CountTrailerRequest req, {String kind = 'proto'}) async* {
+    final ct = contentTypeFor(true, kind);
+    final st = await _t.openStream(Request(url: '/easyrpc.conformance.v1.ConformanceService/CountTrailer', headers: {'content-type': [ct]}, body: Uint8List.fromList(frame(encodeMsg(req, kind)))));
     lastStream = st;
-    await for (final chunk in st.messages) { yield m.CountTrailerResponse.fromBuffer(chunk); }
+    await for (final chunk in st.messages) { yield decodeMsg<m.CountTrailerResponse>(chunk, () => m.CountTrailerResponse(), kind); }
   }
 
-  Future<m.EchoBytesResponse> echoBytes(m.EchoBytesRequest req) async {
-    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/EchoBytes', req.writeToBuffer()));
+  Future<m.EchoBytesResponse> echoBytes(m.EchoBytesRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/easyrpc.conformance.v1.ConformanceService/EchoBytes', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
     lastTrailers = res.trailers;
-    return m.EchoBytesResponse.fromBuffer(res.body!);
+    return decodeMsg<m.EchoBytesResponse>(res.body!, () => m.EchoBytesResponse(), kind);
   }
 
-  Future<m.SleepResponse> sleep(m.SleepRequest req) async {
-    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/Sleep', req.writeToBuffer()));
+  Future<m.SleepResponse> sleep(m.SleepRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/easyrpc.conformance.v1.ConformanceService/Sleep', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
     lastTrailers = res.trailers;
-    return m.SleepResponse.fromBuffer(res.body!);
+    return decodeMsg<m.SleepResponse>(res.body!, () => m.SleepResponse(), kind);
   }
 
-  Future<m.EmptyResponse> empty(m.EmptyRequest req) async {
-    final res = await _t.send(_req('/easyrpc.conformance.v1.ConformanceService/Empty', req.writeToBuffer()));
+  Future<m.EmptyResponse> empty(m.EmptyRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/easyrpc.conformance.v1.ConformanceService/Empty', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
     lastTrailers = res.trailers;
-    return m.EmptyResponse.fromBuffer(res.body!);
+    return decodeMsg<m.EmptyResponse>(res.body!, () => m.EmptyResponse(), kind);
   }
 
-  Stream<m.BigStreamResponse> bigStream(m.BigStreamRequest req) async* {
-    final st = await _t.openStream(_req('/easyrpc.conformance.v1.ConformanceService/BigStream', Uint8List.fromList(frame(req.writeToBuffer()))));
+  Stream<m.BigStreamResponse> bigStream(m.BigStreamRequest req, {String kind = 'proto'}) async* {
+    final ct = contentTypeFor(true, kind);
+    final st = await _t.openStream(Request(url: '/easyrpc.conformance.v1.ConformanceService/BigStream', headers: {'content-type': [ct]}, body: Uint8List.fromList(frame(encodeMsg(req, kind)))));
     lastStream = st;
-    await for (final chunk in st.messages) { yield m.BigStreamResponse.fromBuffer(chunk); }
+    await for (final chunk in st.messages) { yield decodeMsg<m.BigStreamResponse>(chunk, () => m.BigStreamResponse(), kind); }
   }
 
 }

@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io' as io;
 import 'dart:typed_data';
+import 'package:protobuf/protobuf.dart' show GeneratedMessage;
 import 'src/http2_transport.dart';
 
 
@@ -288,6 +289,52 @@ class HandlerContext {
 
 const String kContentTypeUnary = 'application/proto';
 const String kContentTypeStream = 'application/connect+proto';
+const String kContentTypeUnaryJson = 'application/json';
+const String kContentTypeStreamJson = 'application/connect+json';
+
+/// Map a Content-Type to a codec ('proto' | 'json'), or null when unsupported.
+String? contentKindOf(String? contentType) {
+  final ct = (contentType ?? '').split(';').first.trim().toLowerCase();
+  switch (ct) {
+    case 'application/proto':
+    case 'application/connect+proto':
+      return 'proto';
+    case 'application/json':
+    case 'application/connect+json':
+      return 'json';
+  }
+  return null;
+}
+
+/// True when the content type denotes the streaming shape.
+bool isStreamContentType(String? contentType) {
+  final ct = (contentType ?? '').split(';').first.trim().toLowerCase();
+  return ct == 'application/connect+proto' || ct == 'application/connect+json';
+}
+
+/// The response Content-Type for a shape + codec.
+String contentTypeFor(bool stream, String kind) => kind == 'json'
+    ? (stream ? kContentTypeStreamJson : kContentTypeUnaryJson)
+    : (stream ? kContentTypeStream : kContentTypeUnary);
+
+/// Encode a generated message in the given codec (proto3 JSON uses the
+/// canonical `toProto3Json` mapping: lowerCamelCase names, int64-as-string,
+/// bytes base64, Any `@type`).
+Uint8List encodeMsg(GeneratedMessage msg, String kind) => kind == 'json'
+    ? Uint8List.fromList(utf8.encode(jsonEncode(msg.toProto3Json())))
+    : msg.writeToBuffer();
+
+/// Decode bytes into a generated message in the given codec. JSON ignores
+/// unknown fields (matching Connect / protojson).
+T decodeMsg<T extends GeneratedMessage>(List<int> data, T Function() create, String kind) {
+  final msg = create();
+  if (kind == 'json') {
+    msg.mergeFromProto3Json(jsonDecode(utf8.decode(data)), ignoreUnknownFields: true);
+  } else {
+    msg.mergeFromBuffer(data);
+  }
+  return msg;
+}
 
 /// Decode a Connect end-stream payload into (code, message, details);
 /// (0, '', null) = clean end. Malformed input is a clean end (matrix M2); an
