@@ -456,6 +456,12 @@ enum TransportMode { auto, io, http2 }
 /// Composition root: pick an adapter by [mode], install the built-in metadata/
 /// deadline interceptors, then any [extra]. Swapping [mode] leaves the
 /// interceptors unchanged.
+///
+/// [transport] short-circuits adapter selection and is used as the inner
+/// transport — the metadata (bearer) and deadline interceptors still wrap it.
+/// This is how a Flutter app injects a platform client the core cannot depend
+/// on (Cronet / Cupertino), mirroring the `transport:` injection in the TS /
+/// C# / Swift / Kotlin composition roots.
 Transport connect({
   required String baseUrl,
   String token = '',
@@ -464,19 +470,24 @@ Transport connect({
   List<Interceptor> extra = const [],
   io.HttpClient? httpClient,
   io.SecurityContext? securityContext,
+  Transport? transport,
 }) {
   final base = baseUrl.endsWith('/')
       ? baseUrl.substring(0, baseUrl.length - 1)
       : baseUrl;
   Transport inner;
-  switch (mode) {
-    case TransportMode.http2:
-      inner = Http2Transport(baseUrl: base, context: securityContext);
-      break;
-    case TransportMode.io:
-    case TransportMode.auto:
-      inner = IoTransport(client: httpClient ?? io.HttpClient(), baseUrl: base);
-      break;
+  if (transport != null) {
+    inner = transport;
+  } else {
+    switch (mode) {
+      case TransportMode.http2:
+        inner = Http2Transport(baseUrl: base, context: securityContext);
+        break;
+      case TransportMode.io:
+      case TransportMode.auto:
+        inner = IoTransport(client: httpClient ?? io.HttpClient(), baseUrl: base);
+        break;
+    }
   }
   final ics = <Interceptor>[
     if (token.isNotEmpty) MetadataInterceptor({'authorization': ['Bearer $token']}),

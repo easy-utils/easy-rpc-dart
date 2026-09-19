@@ -36,7 +36,6 @@ class CupertinoHttpTransport implements Transport {
   }
 
   @override
-  @override
   Future<RpcStream> openStream(Request req) async {
     final res = await send(req);
     if (res.error != null) throw res.error!;

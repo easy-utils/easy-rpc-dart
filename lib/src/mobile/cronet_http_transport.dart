@@ -46,14 +46,15 @@ class CronetHttpTransport implements Transport {
 
   @override
   Future<RpcStream> openStream(Request req) async {
-    // Non-streaming request object carrying the whole body: cronet_http
+    // All easy-rpc calls are POST (spec §0), so no method is carried on the
+    // request. Non-streaming request object carrying the whole body: cronet_http
     // buffers request bodies internally anyway (`finalize().toBytes()`), and
     // a StreamedRequest here deadlocks — its single-subscription controller
     // is drained by that same toBytes() before the client subscribes, so the
     // send future never completes. The RESPONSE is still streamed
     // incrementally into the shared FrameReader (END terminates, end-stream
     // errors surface via the stream, truncation is caught by finish()).
-    final request = http.Request(req.method, Uri.parse(_url(req.url)))
+    final request = http.Request('POST', Uri.parse(_url(req.url)))
       ..headers.addAll(_flat(req.headers))
       ..bodyBytes = req.body ?? Uint8List(0);
     final resp = await _client.send(request);
