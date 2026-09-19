@@ -12,7 +12,12 @@ import '../easy_rpc.dart';
 /// TLS). Falls back to plain HTTP/1.1 (dart:io) when h2 is unavailable.
 class Http2Transport implements Transport {
   final String baseUrl;
-  Http2Transport({this.baseUrl = ''});
+  /// TLS context used for https:// dials. Defaults to the system trust store;
+  /// callers that must trust a private/self-signed CA pass a context seeded via
+  /// [SecurityContext.setTrustedCertificatesBytes]. WITHOUT this the CA is
+  /// ignored and the handshake fails against a non-public ingress.
+  final SecurityContext? context;
+  Http2Transport({this.baseUrl = '', this.context});
 
   String _url(String u) => u.startsWith('http') ? u : '$baseUrl$u';
 
@@ -106,7 +111,8 @@ class Http2Transport implements Transport {
   Future<Socket> _connect(Uri uri) async {
     final useSSL = uri.scheme == 'https';
     if (useSSL) {
-      final ss = await SecureSocket.connect(uri.host, uri.port, supportedProtocols: ['h2']);
+      final ss = await SecureSocket.connect(uri.host, uri.port,
+          context: context, supportedProtocols: ['h2']);
       if (ss.selectedProtocol != 'h2') {
         throw Exception('Failed to negotiate http/2 via ALPN.');
       }

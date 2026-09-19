@@ -463,6 +463,7 @@ Transport connect({
   int timeoutMs = 0,
   List<Interceptor> extra = const [],
   io.HttpClient? httpClient,
+  io.SecurityContext? securityContext,
 }) {
   final base = baseUrl.endsWith('/')
       ? baseUrl.substring(0, baseUrl.length - 1)
@@ -470,7 +471,7 @@ Transport connect({
   Transport inner;
   switch (mode) {
     case TransportMode.http2:
-      inner = Http2Transport(baseUrl: base);
+      inner = Http2Transport(baseUrl: base, context: securityContext);
       break;
     case TransportMode.io:
     case TransportMode.auto:
